@@ -5,7 +5,8 @@ import Welcome from "./mobile/Welcome";
 import ChatRoom from "./mobile/ChatRoom";
 
 function App() {
-  const url = "01-api-shichisan21.vercel.app";
+  // const url = "http://127.0.0.1:8000/message";
+  const url = "https://01-api-shichisan21.vercel.app/message";
   // const url = process.env.REACT_APP_API_URL
   //   ? process.env.REACT_APP_API_URL
   //   : "#";

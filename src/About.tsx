@@ -39,7 +39,8 @@ const About = ({ url }: AboutProps) => {
   const [message, setMessage] = useState<string>("");
 
   const getData = () => {
-    axios.get(url).then((res) => {
+    // axios.get("http://127.0.0.1:8000").then((res) => {
+    axios.get("https://01-api-shichisan21.vercel.app").then((res) => {
       setData2(res.data);
     });
   };
