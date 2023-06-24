@@ -18,7 +18,7 @@ interface AboutProps {
 }
 
 interface ResponseData {
-  Hello: string;
+  message: string;
 }
 
 /**
@@ -31,12 +31,14 @@ interface ResponseData {
 
 const About = ({ url }: AboutProps) => {
   const [data, setData] = useState<ResponseData | null>(null);
+  const [message, setMessage] = useState<string>("");
 
-  const GetData = () => {
-    axios.get(url).then((res) => {
-      setData(res.data);
-    });
+  const postData = async () => {
+    setMessage("これはテストです。こんにちはAI。あなたのお名前は？");
+    const response = await axios.post(url, { message });
+    setData(response.data);
   };
+
   return (
     <Box>
       <Typography variant='h4' component='div' gutterBottom>
@@ -48,9 +50,9 @@ const About = ({ url }: AboutProps) => {
       <Box>
         <Box>This is Axios Test</Box>
         {data ? (
-          <Box>{data.Hello}</Box>
+          <Box>{data.message}</Box>
         ) : (
-          <Button onClick={GetData}>データを取得</Button>
+          <Button onClick={postData}>データを取得</Button>
         )}
       </Box>
     </Box>

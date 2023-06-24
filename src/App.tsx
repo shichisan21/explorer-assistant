@@ -1,4 +1,3 @@
-// src/App.tsx
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import About from "./About";
@@ -6,7 +5,9 @@ import Welcome from "./mobile/Welcome";
 import ChatRoom from "./mobile/ChatRoom";
 
 function App() {
-  const url = "https://01-api.vercel.app/";
+  const url = process.env.REACT_APP_API_URL
+    ? process.env.REACT_APP_API_URL
+    : "#";
   return (
     <Router>
       <Link to='/about'>About</Link>

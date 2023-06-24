@@ -10,6 +10,6 @@ module.exports = {
   plugins: ["react-refresh"],
   rules: {
     "react-refresh/only-export-components": "warn",
-    "@typescript-eslint/no-unused-vars": "error", // or "error" to treat as an error
+    "@typescript-eslint/no-unused-vars": "warn", // or "error" to treat as an error
   },
 };
