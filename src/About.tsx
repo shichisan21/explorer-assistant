@@ -37,6 +37,7 @@ const About = ({ url }: AboutProps) => {
     setMessage("これはテストです。こんにちはAI。あなたのお名前は？");
     const response = await axios.post(url, { message });
     setData(response.data);
+    console.log(url);
   };
 
   return (
