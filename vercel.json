@@ -1,20 +1,8 @@
 {
   "routes": [
     {
-      "src": "^/about$",
+      "src": "/(.*)",
       "dest": "/index.html"
-    },
-    {
-      "src": "^/mobile/Welcome$",
-      "dest": "/index.html"
-    },
-    {
-      "src": "^/mobile/Chatroom$",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/(.*).js",
-      "dest": "/$1.js"
     }
   ]
 }
