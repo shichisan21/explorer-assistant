@@ -5,7 +5,7 @@
 /**
  * Import
  */
-import React, { useState } from "react";
+import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { Box, Button } from "@mui/material";
