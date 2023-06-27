@@ -12,6 +12,7 @@ import About from "./About";
 import Welcome from "./mobile/Welcome";
 import ChatRoom from "./mobile/ChatRoom";
 import SampleList from "./mobile/SampleList";
+import UploadCSV from "./UploadCSV";
 
 function App() {
   // const url = "http://127.0.0.1:8000/message";
@@ -26,8 +27,10 @@ function App() {
       <Link to='/about'>About</Link>
       <Link to='/mobile/list'>List</Link>
       <Link to='/mobile/Welcome'>Welcome</Link>
+      <Link to='/UploadCSV'>UploadCSV</Link>
 
       <Routes>
+        <Route path='/UploadCSV' element={<UploadCSV />} />
         <Route path='/about' element={<About url={url} />} />
         <Route path='/mobile/Welcome' element={<Welcome />} />
         <Route path='/mobile/List' element={<SampleList />} />
