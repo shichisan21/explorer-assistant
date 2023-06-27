@@ -7,20 +7,19 @@ const csvReceiveUrl = import.meta.env.VITE_APP_CSV_API_URL
   : "#";
 
 const UploadCSV: React.FC = () => {
-  const [file, setFile] = useState<File | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const handleFileDrop = (event: React.DragEvent<HTMLInputElement>) => {
+  const handleFileDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setIsDragOver(false);
-    const selectedFile =
-      event.dataTransfer.files && event.dataTransfer.files[0];
-    setFile(selectedFile);
+    const file = event.dataTransfer.files[0];
+    setSelectedFile(file);
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files && event.target.files[0];
-    setFile(selectedFile);
+    const file = event.target.files && event.target.files[0];
+    setSelectedFile(file);
   };
 
   const handleDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
@@ -34,39 +33,37 @@ const UploadCSV: React.FC = () => {
   };
 
   const handleUpload = async () => {
-    if (!file) {
+    if (!selectedFile) {
       console.log("No file selected.");
       return;
     }
 
     try {
       const reader = new FileReader();
-      reader.onload = async () => {
-        if (reader.result) {
-          const base64Data = reader.result.toString().split(",")[1];
+      reader.onloadend = async () => {
+        const base64Data = reader.result as string;
+        console.log("Base64 data:", base64Data);
 
-          try {
-            console.log("Upload data:", base64Data);
+        try {
+          const response = await axios.post(
+            "http://127.0.0.1:8000/upload-csv",
+            { csvData: base64Data },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
-            const response = await axios.post(
-              csvReceiveUrl,
-              { csvData: base64Data },
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-
-            console.log("Upload successful:", response.data);
-          } catch (error) {
-            console.error("Upload error:", error);
-          }
+          console.log("Upload successful:", response.data);
+        } catch (error) {
+          console.error("Upload error:", error);
         }
       };
-      reader.readAsDataURL(file);
+
+      reader.readAsDataURL(selectedFile);
     } catch (error) {
-      console.error("File read error:", error);
+      console.error("Base64 conversion error:", error);
     }
   };
 
@@ -93,6 +90,7 @@ const UploadCSV: React.FC = () => {
           variant='outlined'
           sx={{ display: "none" }}
           inputProps={{ accept: ".csv" }}
+          id='file-input'
         />
         <label htmlFor='file-input'>
           <Button
@@ -101,7 +99,9 @@ const UploadCSV: React.FC = () => {
             component='span'
             sx={{ display: "block" }}
           >
-            {file ? file.name : "Drop CSV file here or click to upload"}
+            {selectedFile
+              ? selectedFile.name
+              : "Drop CSV file here or click to upload"}
           </Button>
         </label>
       </Box>
