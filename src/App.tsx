@@ -22,10 +22,13 @@ function App() {
     ? import.meta.env.VITE_APP_API_URL
     : "#";
 
+  console.log("address", url);
+
   return (
     <Router>
       <Link to='/about'>About</Link>
-      <Link to='/mobile/list'>List</Link>
+      <Link to='/mobile/FrameView'>FrameView</Link>
+      <Link to='/mobile/List'>List</Link>
       <Link to='/mobile/Welcome'>Welcome</Link>
       <Link to='/UploadCSV'>UploadCSV</Link>
 
