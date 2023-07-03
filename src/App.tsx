@@ -22,7 +22,7 @@ function App() {
     ? import.meta.env.VITE_APP_API_URL
     : "#";
 
-  console.log("address", url);
+  console.log("this address", url);
 
   return (
     <Router>
