@@ -7,15 +7,15 @@ import useOnDrop from "./component/useOnDrop";
 
 const UploadCSV: React.FC = () => {
   const { onDrop, serverResponse } = useOnDrop();
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+  });
   const style: React.CSSProperties = {
     width: 200,
     height: 150,
     border: "1px dotted #888",
+    backgroundColor: isDragActive ? "#eee" : "#fff", // 背景色を変える
   };
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-  });
 
   return (
     <>
