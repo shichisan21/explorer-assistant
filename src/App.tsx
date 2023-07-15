@@ -13,6 +13,7 @@ import Welcome from "./mobile/Welcome";
 import ChatRoom from "./mobile/ChatRoom";
 import SampleList from "./mobile/SampleList";
 import UploadCSV from "./UploadCSV";
+import TalkPost from "./component/TalkPost";
 
 function App() {
   // const url = "http://127.0.0.1:8000/message";
@@ -26,6 +27,7 @@ function App() {
 
   return (
     <Router>
+      <Link to='/TalkPost'>TalkPost</Link>
       <Link to='/about'>About</Link>
       <Link to='/mobile/FrameView'>FrameView</Link>
       <Link to='/mobile/List'>List</Link>
@@ -33,6 +35,7 @@ function App() {
       <Link to='/UploadCSV'>UploadCSV</Link>
 
       <Routes>
+        <Route path='/TalkPost' element={<TalkPost />} />
         <Route path='/UploadCSV' element={<UploadCSV />} />
         <Route path='/about' element={<About url={url} />} />
         <Route path='/mobile/Welcome' element={<Welcome />} />
