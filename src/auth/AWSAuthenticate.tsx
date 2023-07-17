@@ -32,8 +32,23 @@ const AWSAuthenticate: React.FC<AuthProps> = ({ setLoggedIn }) => {
       Password: password,
     });
 
+    // cognitoUser.authenticateUser(authDetails, {
+    //   onSuccess: (result) => {
+    //     const AWStoken = result.getIdToken().getJwtToken();
+    //     // トークンの保存
+    //     document.cookie = `token=${AWStoken}; SameSite=None; Path=/`;
+    //     setLoggedIn(true);
+    //   },
+    //   onFailure: (err) => {
+    //     console.error("Failed to authenticate", err);
+    //   },
+    // });
+
     cognitoUser.authenticateUser(authDetails, {
-      onSuccess: () => {
+      onSuccess: (result) => {
+        const AWStoken = result.getIdToken().getJwtToken();
+        // トークンの保存
+        localStorage.setItem("token", AWStoken);
         setLoggedIn(true);
       },
       onFailure: (err) => {

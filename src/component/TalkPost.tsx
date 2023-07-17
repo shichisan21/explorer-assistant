@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -11,6 +11,8 @@ interface Item {
 }
 
 const App: React.FC = () => {
+  const [awsResponse, setAwsResponse] = useState<string>("");
+
   const [selectedStartDate, setSelectedStartDate] = useState<Date | null>(
     new Date()
   );
@@ -25,6 +27,33 @@ const App: React.FC = () => {
 
   const handleEndDateChange = (date: Date | null) => {
     setSelectedEndDate(date);
+  };
+
+  const handleGetRequest = async (): Promise<void> => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        import.meta.env.VITE_APP_API_GATEWAY_URL,
+        {
+          headers: {
+            Authorization: token,
+          },
+          withCredentials: true,
+        }
+      );
+      // const response = await axios.get(
+      //   import.meta.env.VITE_APP_API_GATEWAY_URL,
+      //   {
+      //     withCredentials: true,
+      //   }
+      // );
+      const awsResponse = response.data;
+
+      setAwsResponse(awsResponse);
+      // または、このデータを状態に格納したり、表示に反映するなどの処理を書くこともできます
+    } catch (error) {
+      console.error(`Error: ${error}`);
+    }
   };
 
   const onClickHandler = async (): Promise<void> => {
@@ -64,6 +93,8 @@ const App: React.FC = () => {
         />{" "}
       </LocalizationProvider>
       <Button onClick={onClickHandler}>Click!!</Button>
+      <Button onClick={handleGetRequest}>Request SEND!!</Button>
+      <Typography>{JSON.stringify(awsResponse, null, 2)}</Typography>
     </Box>
   );
 };
