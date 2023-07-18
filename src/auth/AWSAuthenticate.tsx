@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Box, Button, TextField } from "@mui/material";
 
 import {
   CognitoUserPool,
@@ -58,21 +59,41 @@ const AWSAuthenticate: React.FC<AuthProps> = ({ setLoggedIn }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type='text'
-        placeholder='Username'
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type='password'
-        placeholder='Password'
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type='submit'>Log in</button>
-    </form>
+    <>
+      <form onSubmit={handleSubmit} noValidate autoComplete='off'>
+        <Box sx={{ margin: 2 }}>
+          <TextField
+            id='username-input'
+            label='Username'
+            variant='outlined'
+            type='text'
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </Box>
+        <Box>
+          <TextField
+            id='password-input'
+            label='Password'
+            variant='outlined'
+            type='password'
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{ marginTop: "20px" }}
+          />
+        </Box>
+        <Box>
+          <Button
+            variant='contained'
+            color='primary'
+            type='submit'
+            style={{ marginTop: "20px" }}
+          >
+            Log in
+          </Button>
+        </Box>
+      </form>
+    </>
   );
 };
 

@@ -15,6 +15,19 @@ import {
   Link,
   Navigate,
 } from "react-router-dom";
+
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+
 import About from "./About";
 import Welcome from "./mobile/Welcome";
 import ChatRoom from "./mobile/ChatRoom";
@@ -34,15 +47,49 @@ function App() {
   console.log("this address", url);
   // 追加: ログインステータスを管理するステート;
   const [loggedIn, setLoggedIn] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    setDrawerOpen(!drawerOpen);
+  };
 
   return (
     <Router>
-      <Link to='/TalkPost'>TalkPost</Link>
-      <Link to='/about'>About</Link>
-      <Link to='/mobile/FrameView'>FrameView</Link>
-      <Link to='/mobile/List'>List</Link>
-      <Link to='/mobile/Welcome'>Welcome</Link>
-      <Link to='/UploadCSV'>UploadCSV</Link>
+      <AppBar position='static'>
+        <Toolbar>
+          <IconButton
+            edge='start'
+            color='inherit'
+            onClick={toggleDrawer}
+            aria-label='menu'
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant='h6'>Your App</Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer anchor='left' open={drawerOpen} onClose={toggleDrawer}>
+        <List>
+          <ListItem component={Link} to='/TalkPost'>
+            <ListItemText primary='TalkPost' />
+          </ListItem>
+          <ListItem component={Link} to='/About'>
+            <ListItemText primary='About' />
+          </ListItem>
+          <ListItem component={Link} to='/mobile/FrameView'>
+            <ListItemText primary='FrameView' />
+          </ListItem>
+          <ListItem component={Link} to='/mobile/List'>
+            <ListItemText primary='List' />
+          </ListItem>
+          <ListItem component={Link} to='/mobile/Welcome'>
+            <ListItemText primary='Welcome' />
+          </ListItem>
+          <ListItem component={Link} to='/UploadCSV'>
+            <ListItemText primary='UploadCSV' />
+          </ListItem>
+        </List>
+      </Drawer>
       <Routes>
         <Route
           path='/auth'
