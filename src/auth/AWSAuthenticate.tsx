@@ -68,6 +68,9 @@ const AWSAuthenticate: React.FC<AuthProps> = ({ setLoggedIn }) => {
             variant='outlined'
             type='text'
             value={username}
+            InputLabelProps={{
+              shrink: true,
+            }}
             onChange={(e) => setUsername(e.target.value)}
           />
         </Box>
@@ -79,6 +82,9 @@ const AWSAuthenticate: React.FC<AuthProps> = ({ setLoggedIn }) => {
             type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
             style={{ marginTop: "20px" }}
           />
         </Box>
