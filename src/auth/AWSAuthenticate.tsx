@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Alert, AlertColor } from "@mui/material";
 
 import {
   CognitoUserPool,
@@ -19,6 +19,8 @@ interface AuthProps {
 const AWSAuthenticate: React.FC<AuthProps> = ({ setLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState<AlertColor>("info");
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -51,15 +53,24 @@ const AWSAuthenticate: React.FC<AuthProps> = ({ setLoggedIn }) => {
         // トークンの保存
         localStorage.setItem("token", AWStoken);
         setLoggedIn(true);
+        setSeverity("success");
+        setMessage("Login successful!");
       },
       onFailure: (err) => {
         console.error("Failed to authenticate", err);
+        setSeverity("error");
+        setMessage(`Failed to authenticate: ${err.message}`);
       },
     });
   };
 
   return (
     <>
+      {message && (
+        <Box sx={{ margin: 2 }}>
+          <Alert severity={severity}>{message}</Alert>
+        </Box>
+      )}
       <form onSubmit={handleSubmit} noValidate autoComplete='off'>
         <Box sx={{ margin: 2 }}>
           <TextField
