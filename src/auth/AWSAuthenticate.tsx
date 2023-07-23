@@ -6,6 +6,7 @@ import {
   CognitoUser,
   AuthenticationDetails,
 } from "amazon-cognito-identity-js";
+import { useNavigate } from "react-router-dom";
 
 const userPool = new CognitoUserPool({
   UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
@@ -21,6 +22,7 @@ const AWSAuthenticate: React.FC<AuthProps> = ({ setLoggedIn }) => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [severity, setSeverity] = useState<AlertColor>("info");
+  const navigate = useNavigate();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -55,6 +57,7 @@ const AWSAuthenticate: React.FC<AuthProps> = ({ setLoggedIn }) => {
         setLoggedIn(true);
         setSeverity("success");
         setMessage("Login successful!");
+        navigate("/home");
       },
       onFailure: (err) => {
         console.error("Failed to authenticate", err);

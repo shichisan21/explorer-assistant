@@ -35,6 +35,7 @@ import SampleList from "./mobile/SampleList";
 import UploadCSV from "./UploadCSV";
 import TalkPost from "./component/TalkPost";
 import AWSAuthenticate from "./auth/AWSAuthenticate";
+import HomePage from "./component/HomePage";
 
 function App() {
   // const url = "http://127.0.0.1:8000/message";
@@ -97,6 +98,7 @@ function App() {
         />
         {loggedIn ? (
           <>
+            <Route path='/home' element={<HomePage />} />
             <Route path='/TalkPost' element={<TalkPost />} />
             <Route path='/UploadCSV' element={<UploadCSV />} />
             <Route path='/about' element={<About url={url} />} />
