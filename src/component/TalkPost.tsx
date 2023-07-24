@@ -70,6 +70,7 @@ const App: React.FC = () => {
         itemToSend
       );
       setResponse(res.data);
+      console.log("Click!!", response);
     } catch (error: any) {
       console.error("Error during request", error);
       setResponse(error.message);
@@ -81,20 +82,23 @@ const App: React.FC = () => {
       <h1>Response:</h1>
       <pre>{JSON.stringify(response, null, 2)}</pre>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <DatePicker
-          label='Start Date'
-          value={selectedStartDate}
-          onChange={handleStartDateChange}
-        />
-        <DatePicker
-          label='End Date'
-          value={selectedEndDate}
-          onChange={handleEndDateChange}
-        />{" "}
+        <Box sx={{ margin: 5 }}>
+          <DatePicker
+            label='Start Date'
+            value={selectedStartDate}
+            onChange={handleStartDateChange}
+          />
+        </Box>
+        <Box>
+          <DatePicker
+            label='End Date'
+            value={selectedEndDate}
+            onChange={handleEndDateChange}
+          />
+        </Box>
       </LocalizationProvider>
       <Button onClick={onClickHandler}>Click!!</Button>
       <Button onClick={handleGetRequest}>Request SEND!!</Button>
-      <Typography>{JSON.stringify(awsResponse, null, 2)}</Typography>
     </Box>
   );
 };
