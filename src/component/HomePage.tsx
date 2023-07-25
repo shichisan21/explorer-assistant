@@ -1,5 +1,13 @@
+import { animated, useSpring } from "react-spring";
+
 const HomePage: React.FC = () => {
-  return <div>Welcome to the Home Page!</div>;
+  const fade = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    delay: 500,
+  });
+
+  return <animated.h1 style={fade}>Welcome to the Home Page!</animated.h1>;
 };
 
 export default HomePage;
