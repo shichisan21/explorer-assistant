@@ -36,6 +36,9 @@ import UploadCSV from "./UploadCSV";
 import TalkPost from "./component/TalkPost";
 import AWSAuthenticate from "./auth/AWSAuthenticate";
 import HomePage from "./component/HomePage";
+import OTPAuthRegister from "./component/OTPAuthRegister";
+import OTPAuthLogin from "./component/OTPAuthLogin";
+import OTPAuthConfirm from "./component/OTPAuthConfirm";
 
 function App() {
   // const url = "http://127.0.0.1:8000/message";
@@ -89,6 +92,15 @@ function App() {
           <ListItem component={Link} to='/UploadCSV'>
             <ListItemText primary='UploadCSV' />
           </ListItem>
+          <ListItem component={Link} to='/OTPAuthRegister'>
+            <ListItemText primary='OTPAuthRegister' />
+          </ListItem>
+          <ListItem component={Link} to='/OTPAuthLogin'>
+            <ListItemText primary='OTPAuthLogin' />
+          </ListItem>
+          <ListItem component={Link} to='/OTPAuthConfirm'>
+            <ListItemText primary='OTPAuthConfirm' />
+          </ListItem>
         </List>
       </Drawer>
       <Routes>
@@ -101,6 +113,9 @@ function App() {
             <Route path='/home' element={<HomePage />} />
             <Route path='/TalkPost' element={<TalkPost />} />
             <Route path='/UploadCSV' element={<UploadCSV />} />
+            <Route path='/OTPAuthRegister' element={<OTPAuthRegister />} />
+            <Route path='/OTPAuthLogin' element={<OTPAuthLogin />} />
+            <Route path='/OTPAuthConfirm' element={<OTPAuthConfirm />} />
             <Route path='/about' element={<About url={url} />} />
             <Route path='/mobile/Welcome' element={<Welcome />} />
             <Route path='/mobile/List' element={<SampleList />} />
