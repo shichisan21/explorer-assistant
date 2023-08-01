@@ -4,10 +4,13 @@ import {
   AuthenticationDetails,
   CognitoUserPool,
 } from "amazon-cognito-identity-js";
+import { Box, Button, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const OTPAuthLogin: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const userPool = new CognitoUserPool({
     UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
@@ -30,6 +33,7 @@ const OTPAuthLogin: React.FC = () => {
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: (result) => {
         console.log("Sign in success!", result);
+        navigate("/About");
       },
       onFailure: (err) => {
         console.error("Failed to sign in", err);
@@ -43,18 +47,30 @@ const OTPAuthLogin: React.FC = () => {
   return (
     <div>
       <h1>Sign In</h1>
-      <input
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder='Email'
-      />
-      <input
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder='Password'
-        type='password'
-      />
-      <button onClick={handleSignIn}>Sign In</button>
+      <p>登録したメールアドレスとパスワードを入力してください。</p>
+      <p>
+        ワンタイムパスワードによるログイン後にこちらでログインが可能になります。
+      </p>
+      <Box>
+        <TextField
+          sx={{ margin: 2 }}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder='Email'
+        />
+      </Box>
+      <Box>
+        <TextField
+          sx={{ margin: 2 }}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder='Password'
+          type='password'
+        />
+      </Box>
+      <Button sx={{ margin: 2 }} variant='contained' onClick={handleSignIn}>
+        SIGN IN
+      </Button>
     </div>
   );
 };

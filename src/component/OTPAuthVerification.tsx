@@ -4,6 +4,7 @@ import {
   AuthenticationDetails,
   CognitoUserPool,
 } from "amazon-cognito-identity-js";
+import { Box, Button, TextField } from "@mui/material";
 
 const OTPAuthVerification: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -34,17 +35,28 @@ const OTPAuthVerification: React.FC = () => {
   return (
     <div>
       <h1>Confirm OTP</h1>
-      <input
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder='Email'
-      />
-      <input
-        value={otp}
-        onChange={(e) => setOtp(e.target.value)}
-        placeholder='OTP'
-      />
-      <button onClick={handleConfirm}>Confirm OTP</button>
+      <p>メールアドレスとパスワードを設定して下さい。</p>
+      <p>入力したメールアドレスにワンタイムパスワードが送付されます。</p>
+      <Box>
+        <TextField
+          sx={{ margin: 2 }}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder='Email'
+        />
+      </Box>
+      <Box>
+        <TextField
+          sx={{ margin: 2 }}
+          value={otp}
+          onChange={(e) => setOtp(e.target.value)}
+          placeholder='Password'
+          type='password'
+        />
+      </Box>
+      <Button sx={{ margin: 2 }} variant='contained' onClick={handleConfirm}>
+        Confirm OTP
+      </Button>
     </div>
   );
 };
