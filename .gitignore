@@ -1,5 +1,6 @@
 .http
 .env
+.env.*
 # Logs
 logs
 *.log
