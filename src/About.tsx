@@ -10,6 +10,9 @@ import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { Box, Button } from "@mui/material";
 
+import { CognitoUserPool } from "amazon-cognito-identity-js";
+import { useNavigate } from "react-router-dom";
+
 /**
  * Interface
  */
@@ -38,6 +41,23 @@ const About = ({ url }: AboutProps) => {
   const [data2, setData2] = useState<ResponseData2 | null>(null);
   const [message, setMessage] = useState<string>("");
 
+  const navigate = useNavigate();
+  const userPool = new CognitoUserPool({
+    UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+    ClientId: import.meta.env.VITE_AWS_OTP_CLIENT_ID,
+  });
+
+  const handleSignOut = () => {
+    const cognitoUser = userPool.getCurrentUser();
+    if (cognitoUser) {
+      cognitoUser.signOut();
+      // Check if user is really signed out
+      if (!userPool.getCurrentUser()) {
+        console.log("User successfully logged out");
+        navigate("/OTPAuthLogin");
+      }
+    }
+  };
   const getData = () => {
     axios.get("http://127.0.0.1:8000").then((res) => {
       // axios.get("https://01-api-shichisan21.vercel.app").then((res) => {
@@ -75,6 +95,7 @@ const About = ({ url }: AboutProps) => {
         ) : (
           <Button onClick={getData}>データを取得</Button>
         )}
+        <Button onClick={handleSignOut}>Logout</Button>
       </Box>
     </Box>
   );

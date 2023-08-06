@@ -18,7 +18,30 @@ const OTPAuthLogin: React.FC = () => {
   });
 
   const handleSignIn = () => {
-    // 同様の認証ロジック
+    const authenticationDetails = new AuthenticationDetails({
+      Username: email,
+      Password: password,
+    });
+
+    const userData = {
+      Username: email,
+      Pool: userPool,
+    };
+
+    const cognitoUser = new CognitoUser(userData);
+
+    cognitoUser.authenticateUser(authenticationDetails, {
+      onSuccess: (result) => {
+        console.log("Sign in success!", result);
+        navigate("/About");
+      },
+      onFailure: (err) => {
+        console.error("Failed to sign in", err);
+      },
+      newPasswordRequired: (userAttributes, requiredAttributes) => {
+        // パスワードが期限切れの場合、新しいパスワードを設定するコード
+      },
+    });
   };
 
   return (
