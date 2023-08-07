@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  CognitoUser,
-  AuthenticationDetails,
-  CognitoUserPool,
-} from "amazon-cognito-identity-js";
+import { CognitoUser, CognitoUserPool } from "amazon-cognito-identity-js";
 import { Box, Button, TextField } from "@mui/material";
 
 const OTPAuthVerification: React.FC = () => {

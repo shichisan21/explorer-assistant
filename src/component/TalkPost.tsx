@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -47,9 +47,10 @@ const App: React.FC = () => {
       //     withCredentials: true,
       //   }
       // );
-      const awsResponse = response.data;
-
-      setAwsResponse(awsResponse);
+      setAwsResponse(response.data);
+      if (awsResponse) {
+        console.log("set");
+      }
       // または、このデータを状態に格納したり、表示に反映するなどの処理を書くこともできます
     } catch (error) {
       console.error(`Error: ${error}`);

@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  CognitoUserPool,
-  CognitoUser,
-  CognitoUserAttribute,
-} from "amazon-cognito-identity-js";
+import { CognitoUserPool, CognitoUser } from "amazon-cognito-identity-js";
 import { Box, Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 

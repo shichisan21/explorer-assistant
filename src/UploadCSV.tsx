@@ -1,7 +1,5 @@
-import React, { useCallback, useState } from "react";
+import React from "react";
 import { useDropzone } from "react-dropzone";
-import axios from "axios";
-import { Box, Typography } from "@mui/material";
 import ResponseView from "./component/ResponseView";
 import useOnDrop from "./component/useOnDrop";
 

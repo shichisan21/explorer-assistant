@@ -38,9 +38,9 @@ const OTPAuthLogin: React.FC = () => {
       onFailure: (err) => {
         console.error("Failed to sign in", err);
       },
-      newPasswordRequired: (userAttributes, requiredAttributes) => {
-        // パスワードが期限切れの場合、新しいパスワードを設定するコード
-      },
+      // newPasswordRequired: (userAttributes, requiredAttributes) => {
+      // パスワードが期限切れの場合、新しいパスワードを設定するコード
+      // },
     });
   };
 

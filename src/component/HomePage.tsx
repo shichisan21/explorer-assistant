@@ -1,4 +1,4 @@
-import { animated, useSpring, useTransition } from "react-spring";
+import { animated, useTransition } from "react-spring";
 import { useState, useEffect } from "react";
 
 const HomePage: React.FC = () => {
