@@ -8,12 +8,9 @@ import { Box, Button, TextField, Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const OTPAuthLogin: React.FC = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const navigate = useNavigate();
 
   const userPool = new CognitoUserPool({
     UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
@@ -22,12 +19,12 @@ const OTPAuthLogin: React.FC = () => {
 
   const handleSignIn = () => {
     const authenticationDetails = new AuthenticationDetails({
-      Username: username,
+      Username: email,
       Password: password,
     });
 
     const userData = {
-      Username: username,
+      Username: email,
       Pool: userPool,
     };
 
@@ -36,17 +33,7 @@ const OTPAuthLogin: React.FC = () => {
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: (result) => {
         console.log("Sign in success!", result);
-        // メール送付
-        // userPool.signUp(email, password, [], [], (err, result) => {
-        //   if (err) {
-        //     console.error(err);
-        //     return;
-        //   }
-        //   console.log("user name is " + result?.user.getUsername());
-        //   console.log("call result: " + result);
-        //   navigate("/OTPAuthConfirm");
-        // });
-        // navigate("/About");
+        navigate("/About");
       },
       onFailure: (err) => {
         console.error("Failed to sign in", err);
@@ -69,18 +56,12 @@ const OTPAuthLogin: React.FC = () => {
     >
       <Paper elevation={3} sx={{ padding: 4, width: 300 }}>
         <Typography variant='h4' gutterBottom>
-          OTP Log In
+          Sign In
         </Typography>
-        <p>まずログインしてください。その後自動でOTPが送付されます。</p>
-        <Box>
-          <TextField
-            fullWidth
-            sx={{ marginBottom: 2 }}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder='Username'
-          />
-        </Box>
+        <p>登録したメールアドレスとパスワードを入力してください。</p>
+        <p>
+          ワンタイムパスワードによるログイン後にこちらでログインが可能になります。
+        </p>
         <Box>
           <TextField
             fullWidth

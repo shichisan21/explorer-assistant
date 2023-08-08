@@ -32,13 +32,23 @@ const OTPAuthConfirm: React.FC = () => {
   return (
     <div>
       <h1>Confirm OTP</h1>
-      <p>ワンタイムパスワードを入力してください。</p>
+      <p>
+        登録したメールアドレスと受信したワンタイムパスワードを入力してください。
+      </p>
+      <Box>
+        <TextField
+          sx={{ margin: 2 }}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder='Email'
+        />
+      </Box>
       <Box>
         <TextField
           sx={{ margin: 2 }}
           value={otp}
           onChange={(e) => setOtp(e.target.value)}
-          placeholder='OneTimePassword'
+          placeholder='Password'
           type='password'
         />
       </Box>
