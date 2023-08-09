@@ -39,6 +39,8 @@ import HomePage from "./component/HomePage";
 import OTPAuthRegister from "./component/OTPAuthRegister";
 import OTPAuthLogin from "./component/OTPAuthLogin";
 import OTPAuthConfirm from "./component/OTPAuthConfirm";
+import CognitoAuth from "./component/CognitoAuth";
+import CognitoOtp from "./component/CognitoOtp";
 
 function App() {
   // const url = "http://127.0.0.1:8000/message";
@@ -101,6 +103,12 @@ function App() {
           <ListItem component={Link} to='/OTPAuthConfirm'>
             <ListItemText primary='OTPAuthConfirm' />
           </ListItem>
+          <ListItem component={Link} to='/CognitoAuth'>
+            <ListItemText primary='CognitoAuth' />
+          </ListItem>
+          <ListItem component={Link} to='/CognitoOtp'>
+            <ListItemText primary='CognitoOtp' />
+          </ListItem>
         </List>
       </Drawer>
       <Routes>
@@ -113,6 +121,8 @@ function App() {
             <Route path='/home' element={<HomePage />} />
             <Route path='/TalkPost' element={<TalkPost />} />
             <Route path='/UploadCSV' element={<UploadCSV />} />
+            <Route path='/CognitoOtp' element={<CognitoOtp />} />
+            <Route path='/CognitoAuth' element={<CognitoAuth />} />
             <Route path='/OTPAuthRegister' element={<OTPAuthRegister />} />
             <Route path='/OTPAuthLogin' element={<OTPAuthLogin />} />
             <Route path='/OTPAuthConfirm' element={<OTPAuthConfirm />} />
