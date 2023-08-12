@@ -9,8 +9,8 @@ const OTPAuthConfirm: React.FC = () => {
   const navigate = useNavigate();
 
   const userPool = new CognitoUserPool({
-    UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-    ClientId: import.meta.env.VITE_AWS_OTP_CLIENT_ID,
+    UserPoolId: import.meta.env.VITE_AWS_OTP2_USER_POOL_ID,
+    ClientId: import.meta.env.VITE_AWS_OTP2_CLIENT_ID,
   });
 
   const cognitoUser = new CognitoUser({

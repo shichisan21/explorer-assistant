@@ -6,31 +6,57 @@ import {
   CognitoUserPool,
   CognitoUser,
   AuthenticationDetails,
+  CognitoUserSession,
+  CognitoIdToken,
+  CognitoAccessToken,
 } from "amazon-cognito-identity-js";
 
 const CognitoOtp: React.FC = () => {
+  const poolData = {
+    UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+    ClientId: import.meta.env.VITE_AWS_OTP_CLIENT_ID,
+  };
+
+  const userPool = new CognitoUserPool(poolData);
+
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
 
   const handleOtpLogIn = () => {
-    const cognitoUserData = localStorage.getItem("cognitoUser");
-    if (cognitoUserData) {
-      const userData = JSON.parse(cognitoUserData);
+    const cognitoUserString = localStorage.getItem("cognitoUser");
+    const dataString = cognitoUserString ? JSON.parse(cognitoUserString) : null;
+    console.log("cognitoUser", dataString);
 
-      // CognitoUserインスタンスを再作成
-      const cognitoUser = new CognitoUser(userData);
+    const userData = {
+      Username: dataString.username,
+      Pool: userPool,
+    };
 
-      cognitoUser.sendCustomChallengeAnswer(otp, {
-        onSuccess: (session) => {
-          // OTP認証に成功した場合の処理
-          navigate("/About"); // 例: ダッシュボードへリダイレクト
-        },
-        onFailure: (err) => {
-          // OTP認証に失敗した場合の処理
-          console.error(err);
-        },
-      });
-    }
+    // 必要な情報を抽出する
+    const cognitoUser = new CognitoUser(userData);
+
+    console.log("cognitoUser", cognitoUser);
+
+    // トークン情報を含むセッションデータを構築
+    const sessionData = {
+      IdToken: new CognitoIdToken(dataString.idToken),
+      AccessToken: new CognitoAccessToken(dataString.accessToken),
+    };
+    const signInUserSession = new CognitoUserSession(sessionData);
+
+    cognitoUser.setSignInUserSession(signInUserSession); // セッション情報を設定
+
+    cognitoUser.sendCustomChallengeAnswer(otp, {
+      onSuccess: (session) => {
+        // OTP認証に成功した場合の処理
+        console.log("SUCCESS!!!!!!");
+        navigate("/About"); // 例: ダッシュボードへリダイレクト
+      },
+      onFailure: (err) => {
+        // OTP認証に失敗した場合の処理
+        console.error(err);
+      },
+    });
   };
 
   return (
