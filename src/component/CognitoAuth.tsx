@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Box, Button, TextField, Paper, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -6,6 +6,7 @@ import {
   CognitoUserPool,
   CognitoUser,
   AuthenticationDetails,
+  CognitoUserSession,
 } from "amazon-cognito-identity-js";
 
 const poolData = {
@@ -18,68 +19,60 @@ const CognitoAuth: React.FC = () => {
   // 現在の認証のステージを示す状態を追加
   const [authStage, setAuthStage] = useState("login");
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [open, setOpen] = React.useState(false);
-  const [otp, setOtp] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [otp, setOtp] = useState<string>("");
 
-  const userData = {
-    Username: email,
-    Pool: userPool,
-  };
-  const cognitoUser = new CognitoUser(userData);
+  // useRefを使用してcognitoUserインスタンスを保持
+  const cognitoUserRef = useRef<CognitoUser | null>(null);
 
   const handleOtpAuth = () => {
-    console.log("Component Called", cognitoUser);
-    const verifyOtp = () => {
-      if (cognitoUser) {
-        // nullチェック
-        cognitoUser.sendCustomChallengeAnswer(otp, {
-          onSuccess: (session: any) => {
-            console.log("OTP Challenge Success");
-          },
-          onFailure: (err: any) => {
-            console.error(err);
-          },
-        });
-      } else {
-        console.error("CognitoUser is null");
-      }
-    };
+    console.log("OTP auth Called", cognitoUserRef.current);
+    if (cognitoUserRef.current) {
+      cognitoUserRef.current.sendCustomChallengeAnswer(otp, {
+        onSuccess: (session: CognitoUserSession) => {
+          console.log("OTP Challenge Success");
+          navigate("/About"); // OTP画面へのリダイレクトなど
+        },
+        onFailure: (err: Error) => {
+          console.error(err);
+        },
+      });
+    } else {
+      console.error("CognitoUser is null");
+    }
   };
 
   const handleLogIn = () => {
+    const userData = {
+      Username: email,
+      Pool: userPool,
+    };
+    cognitoUserRef.current = new CognitoUser(userData);
+
+    if (!cognitoUserRef.current) return;
+
     const authenticationData = {
       Username: email,
       Password: password,
     };
     const authenticationDetails = new AuthenticationDetails(authenticationData);
 
-    cognitoUser.setAuthenticationFlowType("CUSTOM_AUTH");
+    cognitoUserRef.current.setAuthenticationFlowType("CUSTOM_AUTH");
 
-    cognitoUser.authenticateUser(authenticationDetails, {
-      onSuccess: (session) => {
+    cognitoUserRef.current.authenticateUser(authenticationDetails, {
+      onSuccess: (session: CognitoUserSession) => {
         // 認証に成功した場合の処理
         navigate("/CognitoOtp"); // OTP画面へのリダイレクトなど
       },
-      onFailure: (err) => {
+      onFailure: (err: Error) => {
         // 認証に失敗した場合の処理
         console.error(err);
       },
-      customChallenge: async (challengeParameters) => {
+      customChallenge: async (challengeParameters: any) => {
         setAuthStage("otp");
-        console.log("Cognito User", cognitoUser);
-        // const otp = prompt("input OTP", "");
-        // cognitoUser.sendCustomChallengeAnswer(otp, {
-        //   onSuccess: (session: any) => {
-        //     // 認証成功時の処理
-        //     console.log("OTP Challenge Success");
-        //   },
-        //   onFailure: (err: any) => {
-        //     // 認証失敗時の処理
-        //     console.error(err);
-        //   },
-        // });
+        console.log("Cognito User", cognitoUserRef.current);
+        console.log("Challenge Parameter", challengeParameters);
       },
     });
   };
@@ -129,7 +122,6 @@ const CognitoAuth: React.FC = () => {
             </>
           ) : (
             <>
-              {console.log("変化後", cognitoUser)}
               <Typography variant='h4' gutterBottom>
                 Enter OTP
               </Typography>
@@ -142,7 +134,7 @@ const CognitoAuth: React.FC = () => {
                   placeholder='One-Time Password'
                 />
               </Box>
-              <Button fullWidth variant='contained'>
+              <Button fullWidth variant='contained' onClick={handleOtpAuth}>
                 Verify OTP
               </Button>
             </>
