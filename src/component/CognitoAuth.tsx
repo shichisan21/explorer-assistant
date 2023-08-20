@@ -10,8 +10,11 @@ import {
 } from "amazon-cognito-identity-js";
 
 const poolData = {
-  UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-  ClientId: import.meta.env.VITE_AWS_OTP_CLIENT_ID,
+  UserPoolId:
+    import.meta.env.VITE_AWS_USER_POOL_ID || process.env.VITE_AWS_OTP_CLIENT_ID,
+  ClientId:
+    import.meta.env.VITE_AWS_OTP_CLIENT_ID ||
+    process.env.VITE_AWS_OTP_CLIENT_ID,
 };
 const userPool = new CognitoUserPool(poolData);
 
@@ -22,7 +25,9 @@ const CognitoAuth: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [otp, setOtp] = useState<string>("");
+  const [retryCount, setRetryCount] = useState(0);
 
+  const MAX_RETRIES = 3; // 最大再試行回数を定義（必要に応じて変更）
   // useRefを使用してcognitoUserインスタンスを保持
   const cognitoUserRef = useRef<CognitoUser | null>(null);
 
@@ -32,10 +37,23 @@ const CognitoAuth: React.FC = () => {
       cognitoUserRef.current.sendCustomChallengeAnswer(otp, {
         onSuccess: (session: CognitoUserSession) => {
           console.log("OTP Challenge Success");
-          navigate("/About"); // OTP画面へのリダイレクトなど
+          navigate("/About");
         },
         onFailure: (err: Error) => {
           console.error(err);
+        },
+        customChallenge: (challengeParameters: any) => {
+          if (retryCount < MAX_RETRIES) {
+            setRetryCount(retryCount + 1);
+            alert(
+              `OTP verification failed. Please try again. Attempt: ${
+                retryCount + 1
+              }/${MAX_RETRIES}`
+            );
+          } else {
+            alert("Max retries reached. Please start over.");
+            // 必要に応じてリセットや再認証フローを開始する
+          }
         },
       });
     } else {
