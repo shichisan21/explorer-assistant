@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 const userPool = new CognitoUserPool({
   UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-  ClientId: import.meta.env.VITE_AWS_OTP_CLIENT_ID,
+  ClientId: import.meta.env.VITE_AWS_CLIENT_ID,
 });
 
 interface AuthProps {
