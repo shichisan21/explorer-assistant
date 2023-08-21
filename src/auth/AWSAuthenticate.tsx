@@ -13,6 +13,11 @@ const userPool = new CognitoUserPool({
   ClientId: import.meta.env.VITE_AWS_CLIENT_ID,
 });
 
+console.log(
+  "てすと",
+  import.meta.env.VITE_AWS_USER_POOL_ID,
+  import.meta.env.VITE_AWS_CLIENT_ID
+);
 interface AuthProps {
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
