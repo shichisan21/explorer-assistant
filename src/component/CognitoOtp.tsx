@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import {
   CognitoUserPool,
   CognitoUser,
-  AuthenticationDetails,
   CognitoUserSession,
   CognitoIdToken,
   CognitoAccessToken,
@@ -49,8 +48,7 @@ const CognitoOtp: React.FC = () => {
     cognitoUser.sendCustomChallengeAnswer(otp, {
       onSuccess: (session) => {
         // OTP認証に成功した場合の処理
-        console.log("SUCCESS!!!!!!");
-        navigate("/About"); // 例: ダッシュボードへリダイレクト
+        navigate("/About");
       },
       onFailure: (err) => {
         // OTP認証に失敗した場合の処理
