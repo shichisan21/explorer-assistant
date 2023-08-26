@@ -37,6 +37,8 @@ interface ResponseData2 {
  */
 
 const About = ({ url }: AboutProps) => {
+  const oaiRequestUrl = import.meta.env.VITE_OAI_REQUEST_URL;
+
   const [data, setData] = useState<ResponseData | null>(null);
   const [data2, setData2] = useState<ResponseData2 | null>(null);
   const [message, setMessage] = useState<string>("");
@@ -67,7 +69,7 @@ const About = ({ url }: AboutProps) => {
 
   const postData = async () => {
     setMessage("これはテストです。こんにちはAI。あなたのお名前は？");
-    const response = await axios.post(url, { message });
+    const response = await axios.post(oaiRequestUrl, { message });
     setData(response.data);
     console.log(url);
   };
