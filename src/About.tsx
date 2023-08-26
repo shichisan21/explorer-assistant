@@ -68,6 +68,7 @@ const About = ({ url }: AboutProps) => {
   };
 
   const postData = async () => {
+    console.log(oaiRequestUrl);
     setMessage("これはテストです。こんにちはAI。あなたのお名前は？");
     const response = await axios.post(oaiRequestUrl, { message });
     setData(response.data);
