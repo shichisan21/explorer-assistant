@@ -109,7 +109,7 @@ const CognitoAuth: React.FC = () => {
               {/* ログインフォーム */}
               <Typography variant='h4' gutterBottom>
                 Log In
-              </Typography>{" "}
+              </Typography>
               <p>メールアドレスとパスワードを入力してください。</p>
               <p>ワンタイムパスワードが送付されます。</p>
               <Box>
