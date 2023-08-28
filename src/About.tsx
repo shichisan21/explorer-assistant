@@ -8,7 +8,7 @@
 import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
-import { Box, Button } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 
 import { CognitoUserPool } from "amazon-cognito-identity-js";
 import { useNavigate } from "react-router-dom";
@@ -24,10 +24,6 @@ interface ResponseData {
   message: string;
 }
 
-interface ResponseData2 {
-  Hello: string;
-}
-
 /**
  * Type
  */
@@ -39,8 +35,7 @@ interface ResponseData2 {
 const About = ({ url }: AboutProps) => {
   const oaiRequestUrl = import.meta.env.VITE_OAI_REQUEST_URL;
 
-  const [data, setData] = useState<ResponseData | null>(null);
-  const [data2, setData2] = useState<ResponseData2 | null>(null);
+  const [oaiResponse, setOaiResponse] = useState<ResponseData | null>(null);
   const [message, setMessage] = useState<string>("");
 
   const navigate = useNavigate();
@@ -60,19 +55,10 @@ const About = ({ url }: AboutProps) => {
       }
     }
   };
-  const getData = () => {
-    // axios.get("http://127.0.0.1:8000").then((res) => {
-    axios.get("https://01-api-shichisan21.vercel.app").then((res) => {
-      setData2(res.data);
-    });
-  };
 
-  const postData = async () => {
-    console.log(oaiRequestUrl);
-    setMessage("これはテストです。こんにちはAI。あなたのお名前は？");
+  const sendRequestOai = async (): Promise<void> => {
     const response = await axios.post(oaiRequestUrl, { message });
-    setData(response.data);
-    console.log(url);
+    setOaiResponse(response.data);
   };
 
   return (
@@ -84,20 +70,25 @@ const About = ({ url }: AboutProps) => {
         Welcome to the About page.
       </Typography>
       <Box>
-        <Box>This is Axios Test</Box>
-        {data ? (
-          <Box>{data.message}</Box>
+        <TextField
+          id='standard-basic'
+          variant='standard'
+          onChange={(e) => setMessage(e.target.value)}
+        />
+      </Box>
+      <Box>
+        {oaiResponse ? (
+          <Box sx={{ width: "100%", maxWidth: "400px" }}>
+            {oaiResponse.message}
+          </Box>
         ) : (
-          <Button onClick={postData}>データを取得</Button>
+          <Typography>ここにレスポンスが表示されます。</Typography>
         )}
       </Box>
       <Box>
-        <Box>This is Axios Test2</Box>
-        {data2 ? (
-          <Box>{data2.Hello}</Box>
-        ) : (
-          <Button onClick={getData}>データを取得</Button>
-        )}
+        <Button onClick={sendRequestOai}>返事を取得</Button>
+      </Box>
+      <Box>
         <Button onClick={handleSignOut}>Logout</Button>
       </Box>
     </Box>
