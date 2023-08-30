@@ -41,6 +41,7 @@ import OTPAuthLogin from "./component/OTPAuthLogin";
 import OTPAuthConfirm from "./component/OTPAuthConfirm";
 import CognitoAuth from "./component/CognitoAuth";
 import CognitoOtp from "./component/CognitoOtp";
+import Interval from "./Interval";
 
 function App() {
   // const url = "http://127.0.0.1:8000/message";
@@ -76,6 +77,9 @@ function App() {
       </AppBar>
       <Drawer anchor='left' open={drawerOpen} onClose={toggleDrawer}>
         <List>
+          <ListItem component={Link} to='/Interval'>
+            <ListItemText primary='Interval' />
+          </ListItem>
           <ListItem component={Link} to='/TalkPost'>
             <ListItemText primary='TalkPost' />
           </ListItem>
@@ -119,6 +123,7 @@ function App() {
         {loggedIn ? (
           <>
             <Route path='/home' element={<HomePage />} />
+            <Route path='/Interval' element={<Interval />} />
             <Route path='/TalkPost' element={<TalkPost />} />
             <Route path='/UploadCSV' element={<UploadCSV />} />
             <Route path='/CognitoOtp' element={<CognitoOtp />} />
