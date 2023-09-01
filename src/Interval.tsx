@@ -77,19 +77,15 @@ const Interval = () => {
   ];
 
   const updateObj1WithObj2 = (): void => {
+    console.log("********START********", obj1, obj2);
     obj1.forEach((obj1Item, index) => {
       const match = obj2.find((obj2Item) => obj2Item.id === obj1Item.id);
       if (match) {
         obj1[index].name = match.name;
       }
     });
+    console.log("********END********", obj1, obj2);
   };
-
-  console.log(obj1, obj2); // 確認のためにコンソールに出力
-  // この関数を呼び出して obj1 を更新
-  updateObj1WithObj2();
-
-  console.log(obj1, obj2); // 確認のためにコンソールに出力
 
   const sendRequestOai = async (): Promise<void> => {
     const response = await axios.post(oaiRequestUrl, { message });
@@ -102,6 +98,7 @@ const Interval = () => {
 
   return (
     <Box>
+      <Button onClick={updateObj1WithObj2}>Click!!</Button>
       <Typography variant='h4' component='div' gutterBottom>
         Interval
       </Typography>
