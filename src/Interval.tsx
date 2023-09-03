@@ -16,18 +16,6 @@ import { useNavigate } from "react-router-dom";
 /**
  * Interface
  */
-interface AboutProps {
-  url: string;
-}
-
-interface ResponseData {
-  message: string;
-}
-
-interface Person {
-  id: number;
-  name: string;
-}
 
 /**
  * Type
@@ -38,82 +26,22 @@ interface Person {
  */
 
 const Interval = () => {
-  const oaiRequestUrl = import.meta.env.VITE_OAI_REQUEST_URL;
+  const [message, setMessage] = useState<string[]>(["foo"]);
 
-  const [oaiResponse, setOaiResponse] = useState<ResponseData | null>(null);
-  const [message, setMessage] = useState<string>("");
-
-  const navigate = useNavigate();
-  const userPool = new CognitoUserPool({
-    UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
-    ClientId: import.meta.env.VITE_AWS_OTP_CLIENT_ID,
-  });
-
-  const handleSignOut = () => {
-    const cognitoUser = userPool.getCurrentUser();
-    if (cognitoUser) {
-      cognitoUser.signOut();
-      // Check if user is really signed out
-      if (!userPool.getCurrentUser()) {
-        console.log("User successfully logged out");
-        navigate("/OTPAuthLogin");
-      }
-    }
+  const updateArray = (): void => {
+    setMessage((prevMessage) => [...prevMessage, "bar"]);
   };
-  const obj1: Person[] = [
-    {
-      id: 1,
-      name: "suzuki",
-    },
-    { id: 2, name: "tanaka" },
-  ];
-
-  const obj2: Person[] = [
-    {
-      id: 1,
-      name: "satou",
-    },
-    { id: 2, name: "fujiwara" },
-  ];
-
-  const updateObj1WithObj2 = (): void => {
-    console.log("********START********", obj1, obj2);
-    obj1.forEach((obj1Item, index) => {
-      const match = obj2.find((obj2Item) => obj2Item.id === obj1Item.id);
-      if (match) {
-        obj1[index].name = match.name;
-      }
-    });
-    console.log("********END********", obj1, obj2);
-  };
-
-  const sendRequestOai = async (): Promise<void> => {
-    const response = await axios.post(oaiRequestUrl, { message });
-    setOaiResponse(response.data);
-  };
-
-  useEffect(() => {
-    sendRequestOai();
-  }, []);
 
   return (
     <Box>
-      <Button onClick={updateObj1WithObj2}>Click!!</Button>
+      <Button onClick={updateArray}>Click!!</Button>
+      {message}
       <Typography variant='h4' component='div' gutterBottom>
         Interval
       </Typography>
       <Typography variant='body1' gutterBottom>
         Welcome to the Interval page.
       </Typography>
-      <Box>
-        {oaiResponse ? (
-          <Box sx={{ width: "100%", maxWidth: "400px" }}>
-            {oaiResponse.message}
-          </Box>
-        ) : (
-          <Typography>ここにレスポンスが表示されます。</Typography>
-        )}
-      </Box>
     </Box>
   );
 };
