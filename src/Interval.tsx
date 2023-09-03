@@ -20,29 +20,56 @@ import { useNavigate } from "react-router-dom";
 /**
  * Type
  */
+interface Message {
+  id: number;
+  name: string;
+}
 
 /**
  * Program
  */
 
 const Interval = () => {
-  const [message, setMessage] = useState<string[]>(["foo"]);
+  const [message, setMessage] = useState<Message[]>([
+    {
+      id: 1,
+      name: "John",
+    },
+    {
+      id: 2,
+      name: "Doe",
+    },
+  ]);
 
   const updateArray = (): void => {
-    setMessage((prevMessage) => [...prevMessage, "bar"]);
+    setMessage((prevMessage) =>
+      prevMessage.map((obj) =>
+        obj.id === 2 ? { id: obj.id, name: "Joseph" } : obj
+      )
+    );
   };
 
   return (
-    <Box>
-      <Button onClick={updateArray}>Click!!</Button>
-      {message}
-      <Typography variant='h4' component='div' gutterBottom>
-        Interval
-      </Typography>
-      <Typography variant='body1' gutterBottom>
-        Welcome to the Interval page.
-      </Typography>
-    </Box>
+    <>
+      <Box>
+        <Button onClick={updateArray}>Click!!</Button>
+        {message &&
+          message.map((d: Message) => {
+            return (
+              <>
+                <Typography>{d.id}</Typography>
+                <Typography>{d.name}</Typography>
+              </>
+            );
+          })}
+        <Typography variant='h4' component='div' gutterBottom>
+          Interval
+        </Typography>
+        <Typography variant='body1' gutterBottom>
+          Welcome to the Interval page.
+        </Typography>
+      </Box>
+    </>
   );
 };
 
