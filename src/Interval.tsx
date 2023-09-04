@@ -30,6 +30,7 @@ interface Message {
  */
 
 const Interval = () => {
+  const [isAuth, setIsAuth] = useState<boolean>();
   const [message, setMessage] = useState<Message[]>([
     {
       id: 1,
@@ -49,26 +50,44 @@ const Interval = () => {
     );
   };
 
+  const onAuthHandle = (): void => {
+    setIsAuth(true);
+  };
+
+  const onLogout = (): void => {
+    setIsAuth(false);
+  };
+
   return (
     <>
-      <Box>
-        <Button onClick={updateArray}>Click!!</Button>
-        {message &&
-          message.map((d: Message) => {
-            return (
-              <>
-                <Typography>{d.id}</Typography>
-                <Typography>{d.name}</Typography>
-              </>
-            );
-          })}
-        <Typography variant='h4' component='div' gutterBottom>
-          Interval
-        </Typography>
-        <Typography variant='body1' gutterBottom>
-          Welcome to the Interval page.
-        </Typography>
-      </Box>
+      {isAuth ? (
+        <>
+          <Box>
+            <Button onClick={updateArray}>Click!!</Button>
+            {message &&
+              message.map((d: Message) => {
+                return (
+                  <>
+                    <Typography>{d.id}</Typography>
+                    <Typography>{d.name}</Typography>
+                  </>
+                );
+              })}
+            <Typography variant='h4' component='div' gutterBottom>
+              Interval
+            </Typography>
+            <Typography variant='body1' gutterBottom>
+              Welcome to the Interval page.
+            </Typography>
+          </Box>
+          <Button onClick={onLogout}>Logout</Button>
+        </>
+      ) : (
+        <>
+          <Typography>not Authenticated</Typography>
+          <Button onClick={onAuthHandle}>Click and Auth</Button>
+        </>
+      )}
     </>
   );
 };
