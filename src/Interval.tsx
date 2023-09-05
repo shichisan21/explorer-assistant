@@ -30,7 +30,9 @@ interface Message {
  */
 
 const Interval = () => {
-  const [isAuth, setIsAuth] = useState<boolean>();
+  const [isAuth, setIsAuth] = useState<boolean>(
+    JSON.parse(localStorage.getItem("isAuth") || "false")
+  );
   const [message, setMessage] = useState<Message[]>([
     {
       id: 1,
@@ -41,6 +43,10 @@ const Interval = () => {
       name: "Doe",
     },
   ]);
+
+  useEffect(() => {
+    localStorage.setItem("isAuth", JSON.stringify(isAuth));
+  }, [isAuth]);
 
   const updateArray = (): void => {
     setMessage((prevMessage) =>
@@ -55,6 +61,7 @@ const Interval = () => {
   };
 
   const onLogout = (): void => {
+    localStorage.removeItem("isAuth"); // ここでlocalStorageからisAuthを削除
     setIsAuth(false);
   };
 
