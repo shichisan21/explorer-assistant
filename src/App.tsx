@@ -7,7 +7,7 @@
  */
 
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -47,14 +47,43 @@ function App() {
   // const url = "http://127.0.0.1:8000/message";
   // const url = "https://01-api-shichisan21.vercel.app/message";
 
+  const EXPIRY_TIME = 5000; // 1時間（ミリ秒単位）
+
+  const checkIsLoggedIn = () => {
+    const loggedInTime = localStorage.getItem("loggedInTime");
+    const currentTime = new Date().getTime();
+    const isLoggedIn = localStorage.getItem("loggedIn");
+
+    // loggedInTimeがnullでないかどうかと、数値に変換できるかどうかをチェック
+    if (loggedInTime && !isNaN(Number(loggedInTime)) && isLoggedIn === "true") {
+      return currentTime - Number(loggedInTime) < EXPIRY_TIME;
+    }
+    return false;
+  };
+
+  // ステートの初期値をlocalStorageから取得する
+  const [loggedIn, setLoggedIn] = useState(checkIsLoggedIn());
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   const url = import.meta.env.VITE_APP_API_URL
     ? import.meta.env.VITE_APP_API_URL
     : "#";
-
   console.log("this address", url);
-  // 追加: ログインステータスを管理するステート;
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    // loggedInの値が変更されたときにlocalStorageに保存する
+    if (loggedIn) {
+      localStorage.setItem("loggedIn", "true");
+      localStorage.setItem("loggedInTime", new Date().getTime().toString());
+    } else {
+      localStorage.removeItem("loggedIn");
+      localStorage.removeItem("loggedInTime");
+    }
+  }, [loggedIn]);
+
+  const logOut = () => {
+    setLoggedIn(false);
+  };
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
