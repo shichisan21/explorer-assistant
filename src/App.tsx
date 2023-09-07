@@ -64,6 +64,7 @@ function App() {
   // ステートの初期値をlocalStorageから取得する
   const [loggedIn, setLoggedIn] = useState(checkIsLoggedIn());
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [lastLoginTime, setLastLoginTime] = useState("");
 
   const url = import.meta.env.VITE_APP_API_URL
     ? import.meta.env.VITE_APP_API_URL
@@ -74,7 +75,9 @@ function App() {
     // loggedInの値が変更されたときにlocalStorageに保存する
     if (loggedIn) {
       localStorage.setItem("loggedIn", "true");
-      localStorage.setItem("loggedInTime", new Date().getTime().toString());
+      const currentTime = new Date().getTime().toString();
+      localStorage.setItem("loggedInTime", currentTime);
+      setLastLoginTime(currentTime); // ステートを更新
     } else {
       localStorage.removeItem("loggedIn");
       localStorage.removeItem("loggedInTime");
@@ -144,6 +147,9 @@ function App() {
           </ListItem>
         </List>
       </Drawer>
+      <div>
+        最終ログイン時刻: {new Date(Number(lastLoginTime)).toLocaleString()}
+      </div>
       <Routes>
         <Route
           path='/auth'
