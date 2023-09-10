@@ -86,6 +86,8 @@ function App() {
 
   const logOut = () => {
     setLoggedIn(false);
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("loggedInTime");
   };
 
   const toggleDrawer = () => {
