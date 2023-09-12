@@ -147,6 +147,9 @@ function App() {
           <ListItem component={Link} to='/CognitoOtp'>
             <ListItemText primary='CognitoOtp' />
           </ListItem>
+          <ListItem component={Link} to='/mobile/ChatRoom'>
+            <ListItemText primary='ChatRoom' />
+          </ListItem>
         </List>
       </Drawer>
       <div>
