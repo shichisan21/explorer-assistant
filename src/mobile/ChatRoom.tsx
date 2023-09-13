@@ -35,7 +35,18 @@ const ChatRoom: React.FC = () => {
       />
       <Button
         variant='contained'
-        sx={{ margin: 2 }}
+        sx={{
+          margin: 2,
+          backgroundColor: "green", // 緑色を背景として追加
+          "&:hover": {
+            backgroundColor: "darkgreen", // ホバー時の色も少し暗くする
+          },
+          "&:focus": {
+            // フォーカス時のスタイルを定義
+            outline: "none", // アウトラインを削除
+            boxShadow: "none", // シャドウを削除
+          },
+        }}
         onClick={handleSendMessage}
       >
         Send
