@@ -27,13 +27,19 @@ const ChatRoom: React.FC = () => {
   };
 
   return (
-    <Box>
+    <Box sx={{ margin: 2 }}>
       <Input
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder='Type a message...'
       />
-      <Button onClick={handleSendMessage}>Send</Button>
+      <Button
+        variant='contained'
+        sx={{ margin: 2 }}
+        onClick={handleSendMessage}
+      >
+        Send
+      </Button>
 
       <List>
         {messages.map((msg, index) => (
