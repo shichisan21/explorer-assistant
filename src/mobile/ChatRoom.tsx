@@ -8,10 +8,20 @@ const ChatRoom: React.FC = () => {
 
   useEffect(() => {
     wsRef.current = new WebSocket("ws://localhost:6789");
+    wsRef.current.onopen = () => {
+      console.log("WebSocket is connected.");
+    };
     wsRef.current.onmessage = (event) => {
+      console.log("Received:", event.data);
       setMessages((prevMessages) => [...prevMessages, event.data]);
     };
+    wsRef.current.onclose = (event) => {
+      console.log("WebSocket is closed.", event.reason);
+    };
 
+    wsRef.current.onerror = (error) => {
+      console.error("WebSocket encountered error:", error);
+    };
     return () => {
       if (wsRef.current) {
         wsRef.current.close();
@@ -20,6 +30,7 @@ const ChatRoom: React.FC = () => {
   }, []);
 
   const handleSendMessage = () => {
+    console.log("WebSocket readyState:", wsRef.current?.readyState);
     if (wsRef.current) {
       wsRef.current.send(message);
       setMessage("");
