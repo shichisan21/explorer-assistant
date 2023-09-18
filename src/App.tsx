@@ -44,9 +44,7 @@ import CognitoOtp from "./component/CognitoOtp";
 import Interval from "./Interval";
 
 function App() {
-  // const url = "http://127.0.0.1:8000/message";
-  // const url = "https://01-api-shichisan21.vercel.app/message";
-
+  // ログイン有効時間
   const EXPIRY_TIME = 5000; // 1時間（ミリ秒単位）
 
   const checkIsLoggedIn = () => {
@@ -69,7 +67,6 @@ function App() {
   const url = import.meta.env.VITE_APP_API_URL
     ? import.meta.env.VITE_APP_API_URL
     : "#";
-  console.log("this address", url);
 
   useEffect(() => {
     // loggedInの値が変更されたときにlocalStorageに保存する
@@ -106,7 +103,7 @@ function App() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant='h6'>Your App</Typography>
+          <Typography variant='h6'>Sample Apps</Typography>
         </Toolbar>
       </AppBar>
       <Drawer anchor='left' open={drawerOpen} onClose={toggleDrawer}>

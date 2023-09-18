@@ -1,3 +1,6 @@
+/***
+ * import
+ */
 import React, { useState } from "react";
 import { Box, Button, TextField, Alert, AlertColor } from "@mui/material";
 
@@ -8,20 +11,25 @@ import {
 } from "amazon-cognito-identity-js";
 import { useNavigate } from "react-router-dom";
 
-// console.log(
-//   import.meta.env.VITE_AWS_USER_POOL_ID,
-//   import.meta.env.VITE_AWS_CLIENT_ID
-// );
+/***
+ *Interface & Type
+ * */
 
+interface AuthProps {
+  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+}
+/**
+ * Constant
+ */
+// ユーザプールの作成
 const userPool = new CognitoUserPool({
   UserPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
   ClientId: import.meta.env.VITE_AWS_CLIENT_ID,
 });
 
-interface AuthProps {
-  setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
+/**
+ * Program
+ */
 const AWSAuthenticate: React.FC<AuthProps> = ({ setLoggedIn }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -41,18 +49,6 @@ const AWSAuthenticate: React.FC<AuthProps> = ({ setLoggedIn }) => {
       Username: username,
       Password: password,
     });
-
-    // cognitoUser.authenticateUser(authDetails, {
-    //   onSuccess: (result) => {
-    //     const AWStoken = result.getIdToken().getJwtToken();
-    //     // トークンの保存
-    //     document.cookie = `token=${AWStoken}; SameSite=None; Path=/`;
-    //     setLoggedIn(true);
-    //   },
-    //   onFailure: (err) => {
-    //     console.error("Failed to authenticate", err);
-    //   },
-    // });
 
     cognitoUser.authenticateUser(authDetails, {
       onSuccess: (result) => {
