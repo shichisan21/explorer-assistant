@@ -41,17 +41,10 @@ const App: React.FC = () => {
           withCredentials: true,
         }
       );
-      // const response = await axios.get(
-      //   import.meta.env.VITE_APP_API_GATEWAY_URL,
-      //   {
-      //     withCredentials: true,
-      //   }
-      // );
       setAwsResponse(response.data);
       if (awsResponse) {
         console.log("set");
       }
-      // または、このデータを状態に格納したり、表示に反映するなどの処理を書くこともできます
     } catch (error) {
       console.error(`Error: ${error}`);
     }
