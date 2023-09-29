@@ -19,7 +19,7 @@ interface ApiResponse {
 /**
  * Program
  */
-const Welcome: React.FC = () => {
+const Welcome: React.FC = (): JSX.Element => {
   const getResponse = async () => {
     try {
       const response = await axios.get<ApiResponse>(
