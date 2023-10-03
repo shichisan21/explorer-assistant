@@ -12,6 +12,10 @@ interface ApiResponse {
   name: string;
 }
 
+interface ApiPostResponse {
+  status: string;
+}
+
 /**
  * Constant
  */
@@ -27,6 +31,19 @@ const Welcome: React.FC = (): JSX.Element => {
       );
       alert(`data receive --> ${JSON.stringify(response.data.name)}`);
     } catch (error: unknown) {
+      alert("fetch error");
+    }
+  };
+
+  const sendRequest = async () => {
+    try {
+      const response = await axios.post<ApiPostResponse>(
+        "http://localhost:3000/api/hello",
+        { content: "test" }
+      );
+      alert(`post result receive --> ${JSON.stringify(response.data.status)}`);
+    } catch (error: unknown) {
+      console.error(error);
       alert("fetch error");
     }
   };
@@ -49,7 +66,13 @@ const Welcome: React.FC = (): JSX.Element => {
       >
         {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()}
       </Box>
-      <Button onClick={getResponse}>data fetch!</Button>
+      <Button sx={{ margin: 2 }} onClick={getResponse}>
+        data fetch!
+      </Button>
+
+      <Button sx={{ margin: 2 }} onClick={sendRequest}>
+        data post!
+      </Button>
 
       <Box sx={{ fontSize: "10px" }}>
         © {new Date().getFullYear()} All Rights Reserved
