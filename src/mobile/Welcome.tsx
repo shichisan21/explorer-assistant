@@ -27,7 +27,7 @@ const Welcome: React.FC = (): JSX.Element => {
   const getResponse = async () => {
     try {
       const response = await axios.get<ApiResponse>(
-        "http://localhost:3000/api/hello"
+        "https://localhost:3000/api/hello"
       );
       alert(`data receive --> ${JSON.stringify(response.data.name)}`);
     } catch (error: unknown) {
@@ -39,7 +39,8 @@ const Welcome: React.FC = (): JSX.Element => {
     try {
       const response = await axios.post<ApiPostResponse>(
         "http://localhost:3000/api/hello",
-        { content: "test" }
+        { content: "test" },
+        { headers: { "Content-Type": "application/json" } }
       );
       alert(`post result receive --> ${JSON.stringify(response.data.status)}`);
     } catch (error: unknown) {
