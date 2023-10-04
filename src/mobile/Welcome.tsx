@@ -26,9 +26,7 @@ interface ApiPostResponse {
 const Welcome: React.FC = (): JSX.Element => {
   const getResponse = async () => {
     try {
-      const response = await axios.get<ApiResponse>(
-        "https://localhost:3000/api/hello"
-      );
+      const response = await axios.get("http://localhost:3000/api/hello");
       alert(`data receive --> ${JSON.stringify(response.data.name)}`);
     } catch (error: unknown) {
       alert("fetch error");
@@ -37,12 +35,10 @@ const Welcome: React.FC = (): JSX.Element => {
 
   const sendRequest = async () => {
     try {
-      const response = await axios.post<ApiPostResponse>(
-        "http://localhost:3000/api/hello",
-        { content: "test" },
-        { headers: { "Content-Type": "application/json" } }
-      );
-      alert(`post result receive --> ${JSON.stringify(response.data.status)}`);
+      const response = await axios.post("http://localhost:3000/api/hello", {
+        key1: "value",
+      });
+      console.log(response);
     } catch (error: unknown) {
       console.error(error);
       alert("fetch error");
