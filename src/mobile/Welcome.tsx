@@ -1,8 +1,8 @@
 /***
  * import
  */
-import React from "react";
-import { Box, Button } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { Box, Button, TextField } from "@mui/material";
 import axios from "axios";
 
 /***
@@ -24,6 +24,8 @@ interface ApiPostResponse {
  * Program
  */
 const Welcome: React.FC = (): JSX.Element => {
+  const [inputValue, setInputValue] = useState<string>("");
+
   const getResponse = async () => {
     try {
       const response = await axios.get("http://localhost:3000/api/hello");
@@ -36,13 +38,17 @@ const Welcome: React.FC = (): JSX.Element => {
   const sendRequest = async () => {
     try {
       const response = await axios.post("http://localhost:3000/api/hello", {
-        key1: "value",
+        key1: inputValue,
       });
       console.log(response);
     } catch (error: unknown) {
       console.error(error);
       alert("fetch error");
     }
+  };
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
   };
 
   return (
@@ -66,6 +72,9 @@ const Welcome: React.FC = (): JSX.Element => {
       <Button sx={{ margin: 2 }} onClick={getResponse}>
         data fetch!
       </Button>
+
+      <TextField onChange={handleInput} value={inputValue}></TextField>
+      <Button onClick={sendRequest}>確定</Button>
 
       <Button sx={{ margin: 2 }} onClick={sendRequest}>
         data post!
