@@ -2,7 +2,7 @@
  * import
  */
 import React, { useEffect, useState } from "react";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
 
 /***
@@ -25,7 +25,7 @@ interface ApiPostResponse {
  */
 const Welcome: React.FC = (): JSX.Element => {
   const [inputValue, setInputValue] = useState<string>("");
-
+  const [postData, setPostData] = useState<string[]>([]);
   const getResponse = async () => {
     try {
       const response = await axios.get("http://localhost:3000/api/hello");
@@ -79,6 +79,10 @@ const Welcome: React.FC = (): JSX.Element => {
       <Button sx={{ margin: 2 }} onClick={sendRequest}>
         data post!
       </Button>
+
+      {postData.map((data: string, index: number) => {
+        <Typography>{data}</Typography>;
+      })}
 
       <Box sx={{ fontSize: "10px" }}>
         © {new Date().getFullYear()} All Rights Reserved
