@@ -41,6 +41,8 @@ const Welcome: React.FC = (): JSX.Element => {
         key1: inputValue,
       });
       console.log(response);
+
+      setPostData((prev) => [...prev, inputValue]);
     } catch (error: unknown) {
       console.error(error);
       alert("fetch error");
@@ -81,7 +83,7 @@ const Welcome: React.FC = (): JSX.Element => {
       </Button>
 
       {postData.map((data: string, index: number) => {
-        <Typography>{data}</Typography>;
+        return <Typography key={index}>{data}</Typography>;
       })}
 
       <Box sx={{ fontSize: "10px" }}>
