@@ -40,9 +40,9 @@ const Welcome: React.FC = (): JSX.Element => {
       const response = await axios.post("http://localhost:3000/api/hello", {
         key1: inputValue,
       });
-      console.log(response);
+      console.log("res", response.data);
 
-      setPostData((prev) => [...prev, inputValue]);
+      setPostData((prev) => [...prev, inputValue, response.data.message]);
     } catch (error: unknown) {
       console.error(error);
       alert("fetch error");
@@ -58,7 +58,6 @@ const Welcome: React.FC = (): JSX.Element => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-around",
         alignItems: "center",
         height: "calc(100vh - 50px)",
       }}
