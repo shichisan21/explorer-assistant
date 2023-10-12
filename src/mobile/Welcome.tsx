@@ -35,32 +35,32 @@ const Welcome: React.FC = (): JSX.Element => {
     }
   };
 
-  const obj1 = {
-    111: 0,
-    112: 1,
-    222: 1,
-    333: 2,
-    334: 1,
-  };
+  // const obj1 = {
+  //   111: 0,
+  //   112: 1,
+  //   222: 1,
+  //   333: 2,
+  //   334: 1,
+  // };
 
-  const obj2 = {
-    111: 0,
-    112: 2,
-    222: 1,
-    333: 2,
-    334: 2,
-  };
+  // const obj2 = {
+  //   111: 0,
+  //   112: 2,
+  //   222: 1,
+  //   333: 2,
+  //   334: 2,
+  // };
 
-  const compareObjects = (obj1: any, obj2: any) => {
-    for (const key in obj1) {
-      // `in`演算子はプロトタイプチェーン上のプロパティもチェックします
-      if (key in obj2 && obj1[key] === obj2[key]) {
-        console.log(`Matching key-value pair: key=${key}, value=${obj1[key]}`);
-      }
-    }
-  };
+  // const compareObjects = (obj1: any, obj2: any) => {
+  //   for (const key in obj1) {
+  //     // `in`演算子はプロトタイプチェーン上のプロパティもチェックします
+  //     if (key in obj2 && obj1[key] === obj2[key]) {
+  //       console.log(`Matching key-value pair: key=${key}, value=${obj1[key]}`);
+  //     }
+  //   }
+  // };
 
-  compareObjects(obj1, obj2);
+  // compareObjects(obj1, obj2);
 
   const sendRequest = async () => {
     try {
