@@ -16,6 +16,11 @@ interface ApiPostResponse {
   status: string;
 }
 
+interface ApiData {
+  userInput: string;
+  openAiOutput: string;
+}
+
 /**
  * Constant
  */
@@ -24,8 +29,10 @@ interface ApiPostResponse {
  * Program
  */
 const Welcome: React.FC = (): JSX.Element => {
+  const [data, setData] = useState<ApiData[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
   const [postData, setPostData] = useState<string[]>([]);
+
   const getResponse = async () => {
     try {
       const response = await axios.get("http://localhost:3000/api/hello");
@@ -34,6 +41,19 @@ const Welcome: React.FC = (): JSX.Element => {
       alert("fetch error");
     }
   };
+
+  useEffect(() => {
+    // データをフェッチする
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/hello");
+        setData(response.data.items); // データをステートにセット
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   // const obj1 = {
   //   111: 0,
@@ -81,41 +101,50 @@ const Welcome: React.FC = (): JSX.Element => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        height: "calc(100vh - 50px)",
-      }}
-    >
+    <div>
+      {data.map((item, index) => (
+        <div key={index}>
+          <p>{item.userInput}</p>
+          <p>{item.openAiOutput}</p>
+          {/* 他のデータも適切にレンダー */}
+        </div>
+      ))}
       <Box
         sx={{
-          fontWeight: "bold",
-          fontSize: "20px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          height: "calc(100vh - 50px)",
         }}
       >
-        {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()}
+        <Box
+          sx={{
+            fontWeight: "bold",
+            fontSize: "20px",
+          }}
+        >
+          {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()}
+        </Box>
+        <Button sx={{ margin: 2 }} onClick={getResponse}>
+          data fetch!
+        </Button>
+
+        <TextField onChange={handleInput} value={inputValue}></TextField>
+        <Button onClick={sendRequest}>確定</Button>
+
+        <Button sx={{ margin: 2 }} onClick={sendRequest}>
+          data post!
+        </Button>
+
+        {postData.map((data: string, index: number) => {
+          return <Typography key={index}>{data}</Typography>;
+        })}
+
+        <Box sx={{ fontSize: "10px" }}>
+          © {new Date().getFullYear()} All Rights Reserved
+        </Box>
       </Box>
-      <Button sx={{ margin: 2 }} onClick={getResponse}>
-        data fetch!
-      </Button>
-
-      <TextField onChange={handleInput} value={inputValue}></TextField>
-      <Button onClick={sendRequest}>確定</Button>
-
-      <Button sx={{ margin: 2 }} onClick={sendRequest}>
-        data post!
-      </Button>
-
-      {postData.map((data: string, index: number) => {
-        return <Typography key={index}>{data}</Typography>;
-      })}
-
-      <Box sx={{ fontSize: "10px" }}>
-        © {new Date().getFullYear()} All Rights Reserved
-      </Box>
-    </Box>
+    </div>
   );
 };
 
