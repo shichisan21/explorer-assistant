@@ -2,7 +2,15 @@
  * import
  */
 import React, { useEffect, useState } from "react";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  Paper,
+  List,
+  ListItem,
+} from "@mui/material";
 import axios from "axios";
 
 /***
@@ -32,15 +40,6 @@ const Welcome: React.FC = (): JSX.Element => {
   const [data, setData] = useState<ApiData[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
   const [postData, setPostData] = useState<string[]>([]);
-
-  const getResponse = async () => {
-    try {
-      const response = await axios.get("http://localhost:3000/api/hello");
-      alert(`data receive --> ${JSON.stringify(response.data.name)}`);
-    } catch (error: unknown) {
-      alert("fetch error");
-    }
-  };
 
   useEffect(() => {
     // データをフェッチする
@@ -101,50 +100,81 @@ const Welcome: React.FC = (): JSX.Element => {
   };
 
   return (
-    <div>
-      {data.map((item, index) => (
-        <div key={index}>
-          <p>{item.userInput}</p>
-          <p>{item.openAiOutput}</p>
-          {/* 他のデータも適切にレンダー */}
-        </div>
-      ))}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          height: "calc(100vh - 50px)",
-        }}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        height: "calc(100vh - 50px)",
+      }}
+    >
+      <Typography
+        variant='h4'
+        component='div'
+        sx={{ fontWeight: "bold", fontSize: "20px", mb: 2 }}
       >
-        <Box
-          sx={{
-            fontWeight: "bold",
-            fontSize: "20px",
-          }}
-        >
-          {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()}
-        </Box>
-        <Button sx={{ margin: 2 }} onClick={getResponse}>
-          data fetch!
-        </Button>
+        {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()}
+      </Typography>
 
-        <TextField onChange={handleInput} value={inputValue}></TextField>
-        <Button onClick={sendRequest}>確定</Button>
+      <Typography
+        variant='h4'
+        component='div'
+        sx={{ fontWeight: "bold", fontSize: "20px", mb: 2 }}
+      >
+        OpenAPIに対して質問する事ができます
+      </Typography>
 
-        <Button sx={{ margin: 2 }} onClick={sendRequest}>
-          data post!
-        </Button>
+      <TextField
+        variant='outlined'
+        placeholder='Type something...'
+        onChange={handleInput}
+        value={inputValue}
+        sx={{ mb: 2 }}
+      />
+      <Button
+        variant='contained'
+        color='primary'
+        onClick={sendRequest}
+        sx={{ mb: 2 }}
+      >
+        質問する
+      </Button>
 
-        {postData.map((data: string, index: number) => {
-          return <Typography key={index}>{data}</Typography>;
-        })}
+      <Typography variant='h5' component='div' gutterBottom>
+        直近の2投稿
+      </Typography>
 
-        <Box sx={{ fontSize: "10px" }}>
-          © {new Date().getFullYear()} All Rights Reserved
-        </Box>
-      </Box>
-    </div>
+      <Paper elevation={3} sx={{ p: 2, mb: 3, width: "80%" }}>
+        <List>
+          {data.slice(0, 2).map((item, index) => (
+            <ListItem key={index}>
+              <Box>
+                <Typography variant='body1'>
+                  <strong>投稿文:</strong> {item.userInput}
+                </Typography>
+                <Typography variant='body1'>
+                  <strong>AIによる回答:</strong> {item.openAiOutput}
+                </Typography>
+              </Box>
+            </ListItem>
+          ))}
+        </List>
+      </Paper>
+
+      <Typography variant='h5' component='div' gutterBottom>
+        今回の質問履歴
+      </Typography>
+
+      {postData.map((data, index) => (
+        <Typography variant='body2' key={index} gutterBottom>
+          {data}
+        </Typography>
+      ))}
+
+      <Typography variant='caption' display='block' gutterBottom>
+        © {new Date().getFullYear()} All Rights Reserved
+      </Typography>
+    </Box>
   );
 };
 
