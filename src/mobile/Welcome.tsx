@@ -10,6 +10,7 @@ import {
   Paper,
   List,
   ListItem,
+  Divider,
 } from "@mui/material";
 import axios from "axios";
 
@@ -116,11 +117,7 @@ const Welcome: React.FC = (): JSX.Element => {
         {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()}
       </Typography>
 
-      <Typography
-        variant='h4'
-        component='div'
-        sx={{ fontWeight: "bold", fontSize: "20px", mb: 2 }}
-      >
+      <Typography variant='h4' component='div' sx={{ fontSize: "20px", mb: 2 }}>
         OpenAPIに対して質問する事ができます
       </Typography>
 
@@ -165,13 +162,22 @@ const Welcome: React.FC = (): JSX.Element => {
         今回の質問履歴
       </Typography>
 
-      {postData.map((data, index) => (
-        <Typography variant='body2' key={index} gutterBottom>
-          {data}
-        </Typography>
-      ))}
+      <Paper sx={{ width: "100%", minHeight: "100px" }}>
+        {postData.map((data, index) => (
+          <Typography variant='body2' key={index} gutterBottom>
+            {data}
+          </Typography>
+        ))}
+      </Paper>
 
-      <Typography variant='caption' display='block' gutterBottom>
+      <Divider sx={{ height: "1px", width: "100%" }} />
+
+      <Typography
+        variant='caption'
+        display='block'
+        gutterBottom
+        sx={{ marginTop: 2 }}
+      >
         © {new Date().getFullYear()} All Rights Reserved
       </Typography>
     </Box>
