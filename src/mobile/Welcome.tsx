@@ -163,13 +163,20 @@ const Welcome: React.FC = (): JSX.Element => {
       </Typography>
 
       <Paper sx={{ width: "100%", minHeight: "100px" }}>
-        {postData.map((data, index) => (
-          <Typography variant='body2' key={index} gutterBottom>
-            {data}
-          </Typography>
+        {postData.map((data, index, array) => (
+          <React.Fragment key={index}>
+            {index % 2 === 0 ? (
+              <Typography variant='body2' gutterBottom>
+                <strong>投稿文:</strong> {data}
+              </Typography>
+            ) : (
+              <Typography variant='body2' gutterBottom>
+                <strong>AIによる回答:</strong> {data}
+              </Typography>
+            )}
+          </React.Fragment>
         ))}
       </Paper>
-
       <Divider sx={{ height: "1px", width: "100%" }} />
 
       <Typography
