@@ -42,6 +42,7 @@ import OTPAuthConfirm from "./component/OTPAuthConfirm";
 import CognitoAuth from "./component/CognitoAuth";
 import CognitoOtp from "./component/CognitoOtp";
 import Interval from "./Interval";
+import ColorPicker from "./component/ColorPicker";
 
 function App() {
   // ログイン有効時間
@@ -163,6 +164,9 @@ function App() {
               <ListItem component={Link} to='/mobile/ChatRoom'>
                 <ListItemText primary='ChatRoom' />
               </ListItem>
+              <ListItem component={Link} to='/ColorPicker'>
+                <ListItemText primary='ColorPicker' />
+              </ListItem>
             </List>
           </Drawer>
           <div>
@@ -187,6 +191,7 @@ function App() {
                 <Route path='/OTPAuthRegister' element={<OTPAuthRegister />} />
                 <Route path='/OTPAuthLogin' element={<OTPAuthLogin />} />
                 <Route path='/OTPAuthConfirm' element={<OTPAuthConfirm />} />
+                <Route path='/ColorPicker' element={<ColorPicker />} />
                 <Route path='/about' element={<About url={url} />} />
                 <Route path='/mobile/Welcome' element={<Welcome />} />
                 <Route path='/mobile/List' element={<SampleList />} />
