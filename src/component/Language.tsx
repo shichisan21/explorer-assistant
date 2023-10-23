@@ -1,20 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import LanguageSelector from "./SelectLanguage"; // あなたのファイル構成に合わせてパスを変更してください。
+import { Box, Button, Modal, Typography } from "@mui/material";
 
 const Language: React.FC = () => {
-  const handleLanguageChange = (langCode: number): number => {
-    // ここでlangCodeを使用してAPIを呼び出すなどの処理を行います。
-    console.log(`Selected Language Code: ${langCode}`);
-    return langCode;
+  const [open, setOpen] = useState(false);
+  const [selectedLangCode, setSelectedLangCode] = useState(1);
+  const currentLanguage = selectedLangCode === 1 ? "Japanese" : "English";
+
+  const handleLanguageChange = (langCode: number) => {
+    setSelectedLangCode(langCode);
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
-    <div>
-      <h1>Language Selector App</h1>
-      <LanguageSelector onLanguageChange={handleLanguageChange} />
-
-      {/* 必要に応じて他のコンポーネントや要素を追加します */}
-    </div>
+    <Box>
+      <Typography variant='h4'>Language Selector App</Typography>
+      <Typography variant='h6' style={{ margin: "20px 0" }}>
+        Selected Language: {currentLanguage}
+      </Typography>
+      <Button onClick={handleOpen}>Select Language</Button>
+      <Modal open={open} onClose={handleClose}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "white",
+            padding: 2,
+            boxShadow: 24,
+          }}
+        >
+          <LanguageSelector
+            onLanguageChange={handleLanguageChange}
+            initialValue={selectedLangCode === 1 ? "ja" : "en"}
+          />
+        </Box>
+      </Modal>
+    </Box>
   );
 };
 

@@ -1,8 +1,15 @@
-import React, { useState } from "react";
-import { Select, MenuItem, SelectChangeEvent, Typography } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import {
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+  Button,
+  Box,
+} from "@mui/material";
 
 interface LanguageSelectorProps {
-  onLanguageChange: (langCode: number) => number;
+  onLanguageChange: (langCode: number) => void;
+  initialValue: string;
 }
 
 interface LanguageMappingType {
@@ -12,30 +19,43 @@ interface LanguageMappingType {
 const reverseMapping: LanguageMappingType = {
   ja: 1,
   en: 2,
-  fr: 3,
+  // fr: 3, // 'fr' を使用しない場合はこちらの行は削除してください。
 };
 
 const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   onLanguageChange,
+  initialValue,
 }) => {
-  const [selectedLanguage, setSelectedLanguage] = useState<string>("ja");
-  const [langNumber, setLangNumber] = useState<number>(1);
+  const [selectedLanguage, setSelectedLanguage] =
+    useState<string>(initialValue);
+
+  useEffect(() => {
+    setSelectedLanguage(initialValue);
+  }, [initialValue]);
 
   const handleLanguageChange = (event: SelectChangeEvent) => {
     const lang = event.target.value as string;
     setSelectedLanguage(lang);
-    setLangNumber(onLanguageChange(reverseMapping[lang]));
+  };
+
+  const handleSubmit = () => {
+    onLanguageChange(reverseMapping[selectedLanguage]);
   };
 
   return (
-    <>
+    <Box>
       <Select value={selectedLanguage} onChange={handleLanguageChange}>
         <MenuItem value='ja'>Japanese</MenuItem>
         <MenuItem value='en'>English</MenuItem>
-        <MenuItem value='fr'>French</MenuItem>
       </Select>
-      <Typography>LangNumber: {langNumber}</Typography>
-    </>
+      <Button
+        variant='contained'
+        onClick={handleSubmit}
+        style={{ marginTop: 16 }}
+      >
+        確定
+      </Button>
+    </Box>
   );
 };
 
