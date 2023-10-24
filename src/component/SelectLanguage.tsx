@@ -44,17 +44,22 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 
   return (
     <Box>
-      <Select value={selectedLanguage} onChange={handleLanguageChange}>
-        <MenuItem value='ja'>Japanese</MenuItem>
-        <MenuItem value='en'>English</MenuItem>
-      </Select>
-      <Button
-        variant='contained'
-        onClick={handleSubmit}
-        style={{ marginTop: 16 }}
-      >
-        確定
-      </Button>
+      <Box>
+        <Select value={selectedLanguage} onChange={handleLanguageChange}>
+          <MenuItem value='ja'>Japanese</MenuItem>
+          <MenuItem value='en'>English</MenuItem>
+        </Select>
+      </Box>
+      <Box>
+        <Button
+          fullWidth
+          variant='contained'
+          onClick={handleSubmit}
+          style={{ marginTop: 16 }}
+        >
+          確定
+        </Button>
+      </Box>
     </Box>
   );
 };
