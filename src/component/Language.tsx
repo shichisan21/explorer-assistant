@@ -4,8 +4,13 @@ import { Box, Button, Modal, Typography } from "@mui/material";
 
 const Language: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const [selectedLangCode, setSelectedLangCode] = useState(1);
-  const currentLanguage = selectedLangCode === 1 ? "Japanese" : "English";
+  const [selectedLangCode, setSelectedLangCode] = useState(1); // フランス語のコードを2に設定
+  const currentLanguage =
+    selectedLangCode === 1
+      ? "Japanese"
+      : selectedLangCode === 2
+      ? "English"
+      : "French";
 
   const handleLanguageChange = (langCode: number) => {
     setSelectedLangCode(langCode);
@@ -41,7 +46,13 @@ const Language: React.FC = () => {
         >
           <LanguageSelector
             onLanguageChange={handleLanguageChange}
-            initialValue={selectedLangCode === 1 ? "ja" : "en"}
+            initialValue={
+              selectedLangCode === 1
+                ? "ja"
+                : selectedLangCode === 2
+                ? "en"
+                : "fr"
+            }
           />
         </Box>
       </Modal>

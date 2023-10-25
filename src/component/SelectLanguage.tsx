@@ -19,6 +19,7 @@ interface LanguageMappingType {
 const reverseMapping: LanguageMappingType = {
   ja: 1,
   en: 2,
+  fr: 3,
   // fr: 3, // 'fr' を使用しない場合はこちらの行は削除してください。
 };
 
@@ -48,6 +49,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
         <Select value={selectedLanguage} onChange={handleLanguageChange}>
           <MenuItem value='ja'>Japanese</MenuItem>
           <MenuItem value='en'>English</MenuItem>
+          <MenuItem value='fr'>French</MenuItem>
         </Select>
       </Box>
       <Box>
