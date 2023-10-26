@@ -1,7 +1,7 @@
 // App.tsx or any other component
 
 import React, { useState } from "react";
-import { Button, Box, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import ColorPickerModal from "./ColorPickerModal";
 
 const ColorPicker: React.FC = () => {
