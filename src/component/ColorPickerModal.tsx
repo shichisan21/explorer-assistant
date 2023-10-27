@@ -1,7 +1,7 @@
 // ColorPickerModal.tsx
 
 import React from "react";
-import { SketchPicker } from "react-color";
+import { SketchPicker, BlockPicker } from "react-color";
 import { Modal, Box } from "@mui/material";
 
 interface ColorPickerModalProps {
@@ -36,7 +36,7 @@ const ColorPickerModal: React.FC<ColorPickerModalProps> = ({
           borderRadius: 2,
         }}
       >
-        <SketchPicker color={initialColor} onChange={handleColorChange} />
+        <BlockPicker color={initialColor} onChange={handleColorChange} />
       </Box>
     </Modal>
   );
