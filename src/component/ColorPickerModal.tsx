@@ -1,8 +1,6 @@
-// ColorPickerModal.tsx
-
-import React from "react";
+import React, { useState } from "react";
 import { SketchPicker, BlockPicker } from "react-color";
-import { Modal, Box } from "@mui/material";
+import { Modal, Box, Button, Grid } from "@mui/material";
 
 interface ColorPickerModalProps {
   open: boolean;
@@ -15,8 +13,22 @@ const ColorPickerModal: React.FC<ColorPickerModalProps> = ({
   initialColor = "#000000",
   onClose,
 }) => {
+  const [favorites, setFavorites] = useState<string[]>([]);
+  const [currentColor, setCurrentColor] = useState<string>(initialColor);
+
   const handleColorChange = (colorResult: any) => {
-    onClose(colorResult.hex);
+    setCurrentColor(colorResult.hex);
+  };
+
+  const addFavorite = () => {
+    if (!favorites.includes(currentColor)) {
+      setFavorites([...favorites, currentColor]);
+    }
+  };
+
+  const handleFavoriteClick = (color: string) => {
+    setCurrentColor(color);
+    onClose(color);
   };
 
   return (
@@ -34,9 +46,30 @@ const ColorPickerModal: React.FC<ColorPickerModalProps> = ({
           bgcolor: "white",
           padding: 4,
           borderRadius: 2,
+          width: 300, // モーダルの幅を300ピクセルに固定
         }}
       >
-        <BlockPicker color={initialColor} onChange={handleColorChange} />
+        <BlockPicker color={currentColor} onChange={handleColorChange} />
+        <Button onClick={addFavorite} sx={{ marginTop: 2 }}>
+          Add to Favorites
+        </Button>
+        <Box sx={{ marginTop: 2 }}>
+          <Grid container spacing={1}>
+            {favorites.map((color) => (
+              <Grid item key={color}>
+                <Box
+                  sx={{
+                    width: 30,
+                    height: 30,
+                    bgcolor: color,
+                    cursor: "pointer",
+                  }}
+                  onClick={() => handleFavoriteClick(color)}
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
       </Box>
     </Modal>
   );
