@@ -1,6 +1,13 @@
 import React, { useState } from "react";
-import { SketchPicker, BlockPicker } from "react-color";
-import { Modal, Box, Button, Grid } from "@mui/material";
+import { BlockPicker } from "react-color";
+import {
+  Modal,
+  Box,
+  Button,
+  Grid,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 
 interface ColorPickerModalProps {
   open: boolean;
@@ -15,6 +22,9 @@ const ColorPickerModal: React.FC<ColorPickerModalProps> = ({
 }) => {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [currentColor, setCurrentColor] = useState<string>(initialColor);
+
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleColorChange = (colorResult: any) => {
     setCurrentColor(colorResult.hex);
@@ -46,7 +56,7 @@ const ColorPickerModal: React.FC<ColorPickerModalProps> = ({
           bgcolor: "white",
           padding: 4,
           borderRadius: 2,
-          width: 300, // モーダルの幅を300ピクセルに固定
+          width: fullScreen ? "90%" : 300, // 画面幅が小さいときは90%、それ以外は300px
         }}
       >
         <BlockPicker color={currentColor} onChange={handleColorChange} />
