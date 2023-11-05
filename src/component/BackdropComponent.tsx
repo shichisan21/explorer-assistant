@@ -58,7 +58,7 @@ const BackdropWithModalComponent: React.FC = () => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             bgcolor: "background.paper",
-            p: 4,
+            p: 10,
           }}
         >
           <Box sx={{ display: "flex", flexDirection: "column" }}>
