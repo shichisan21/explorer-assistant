@@ -45,6 +45,7 @@ import Interval from "./Interval";
 import ColorPicker from "./component/ColorPicker";
 import Language from "./component/Language";
 import BackdropComponent from "./component/BackdropComponent";
+import SortComponent from "./component/SortComponent";
 
 function App() {
   // ログイン有効時間
@@ -172,6 +173,9 @@ function App() {
               <ListItem component={Link} to='/BackdropComponent'>
                 <ListItemText primary='BackdropComponent' />
               </ListItem>
+              <ListItem component={Link} to='/SortComponent'>
+                <ListItemText primary='SortComponent' />
+              </ListItem>
             </List>
             <ListItem component={Link} to='/Language'>
               <ListItemText primary='Language' />
@@ -199,6 +203,7 @@ function App() {
                 <Route path='/OTPAuthRegister' element={<OTPAuthRegister />} />
                 <Route path='/OTPAuthLogin' element={<OTPAuthLogin />} />
                 <Route path='/OTPAuthConfirm' element={<OTPAuthConfirm />} />
+                <Route path='/SortComponent' element={<SortComponent />} />
                 <Route path='/ColorPicker' element={<ColorPicker />} />
                 <Route
                   path='/BackdropComponent'
