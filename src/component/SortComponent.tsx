@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 type Person = {
   Name: string;
@@ -28,19 +28,21 @@ const SortComponent: React.FC = () => {
   };
 
   return (
-    <div>
-      <Button variant='contained' onClick={sortAscending}>
-        昇順
-      </Button>
-      <Button variant='contained' onClick={sortDescending}>
-        降順
-      </Button>
+    <Box>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Button variant='contained' onClick={sortAscending}>
+          昇順
+        </Button>
+        <Button variant='contained' onClick={sortDescending}>
+          降順
+        </Button>
+      </Box>
       <ul>
         {people.map((person, index) => (
           <li key={index}>{`${person.Name} : ${person.Money}`}</li>
         ))}
       </ul>
-    </div>
+    </Box>
   );
 };
 
