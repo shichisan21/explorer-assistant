@@ -1,27 +1,34 @@
-// ColorPicker.tsx
-
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { SketchPicker } from "react-color";
-import { Box, Button, Grid, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, Grid, Modal } from "@mui/material";
 
 interface ColorPickerProps {
   initialColor: string;
   onColorChange: (color: string) => void;
 }
+
 const ColorPickerModal: React.FC<ColorPickerProps> = ({
   initialColor,
   onColorChange,
 }) => {
-  const [favorites, setFavorites] = useState<string[]>([]);
+  const [open, setOpen] = useState(false);
+  const [history, setHistory] = useState<string[]>(() => {
+    // localStorageから履歴を読み込みます
+    const savedHistory = localStorage.getItem("colorHistory");
+    return savedHistory ? JSON.parse(savedHistory) : [];
+  });
   const [currentColor, setCurrentColor] = useState<string>(initialColor);
-  const colorPickerRef = useRef<HTMLDivElement | null>(null);
-
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     if (currentColor !== initialColor) {
       onColorChange(currentColor);
+      // 新しい色を履歴に追加し、10件のみを保持します
+      setHistory((prevHistory) => {
+        const updatedHistory = [...prevHistory, currentColor].slice(-10);
+        // 更新された履歴をlocalStorageに保存します
+        localStorage.setItem("colorHistory", JSON.stringify(updatedHistory));
+        return updatedHistory;
+      });
     }
   }, [currentColor, initialColor, onColorChange]);
 
@@ -29,144 +36,65 @@ const ColorPickerModal: React.FC<ColorPickerProps> = ({
     setCurrentColor(colorResult.hex);
   };
 
-  const addFavorite = () => {
-    if (!favorites.includes(currentColor)) {
-      setFavorites([...favorites, currentColor]);
-    }
-  };
-
   const handleFavoriteClick = (color: string) => {
     setCurrentColor(color);
   };
 
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const modalStyle = {
+    position: "absolute" as const,
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+    width: 300, // モーダルの幅を固定にします
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center", // 中央寄せにします
+  };
+
   return (
-    <Box ref={colorPickerRef} sx={{ width: fullScreen ? "90%" : 300 }}>
-      <SketchPicker color={currentColor} onChange={handleColorChange} />
-      <Button onClick={addFavorite} sx={{ marginTop: 2 }}>
-        Add to Favorites
-      </Button>
-      <Box sx={{ marginTop: 2 }}>
-        <Grid container spacing={1}>
-          {favorites.map((color) => (
-            <Grid item key={color}>
-              <Box
-                sx={{
-                  width: 30,
-                  height: 30,
-                  bgcolor: color,
-                  cursor: "pointer",
-                }}
-                onClick={() => handleFavoriteClick(color)}
-              />
+    <>
+      <Button onClick={handleOpen}>色を選択</Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='color-picker-modal'
+        aria-describedby='color-picker-modal-description'
+      >
+        <Box sx={modalStyle}>
+          <SketchPicker color={currentColor} onChange={handleColorChange} />
+          <Box sx={{ marginTop: 2, width: "100%" }}>
+            <Grid container spacing={1} justifyContent='center'>
+              <Grid item xs={12}>
+                <Box>色の履歴(最後の10件):</Box>
+              </Grid>
+              {history.slice(0, 10).map((color, index) => (
+                <Grid item xs={2.4} key={color}>
+                  {" "}
+                  {/* 1行に5つ表示するため、12 / 5 = 2.4 */}
+                  <Box
+                    sx={{
+                      width: "100%", // 親のGridアイテムに合わせて幅を100%にします
+                      paddingTop: "100%", // 正方形にするためにパディングトップを100%にします
+                      borderRadius: "4px", // 角を丸くします
+                      bgcolor: color,
+                      cursor: "pointer",
+                    }}
+                    onClick={() => handleFavoriteClick(color)}
+                  />
+                </Grid>
+              ))}
             </Grid>
-          ))}
-        </Grid>
-      </Box>
-    </Box>
+          </Box>
+        </Box>
+      </Modal>
+    </>
   );
 };
 
 export default ColorPickerModal;
-
-// // ColorPickerModal.tsx
-
-// import React, { useState, useEffect } from "react";
-// import { BlockPicker, SketchPicker } from "react-color";
-// import {
-//   Modal,
-//   Box,
-//   Button,
-//   Grid,
-//   useTheme,
-//   useMediaQuery,
-// } from "@mui/material";
-
-// interface ColorPickerModalProps {
-//   open: boolean;
-//   initialColor?: string;
-//   onClose: (color?: string) => void;
-//   anchorEl: HTMLElement;
-// }
-
-// const ColorPickerModal: React.FC<ColorPickerModalProps> = ({
-//   open,
-//   initialColor = "#000000",
-//   onClose,
-//   anchorEl,
-// }) => {
-//   const [favorites, setFavorites] = useState<string[]>([]);
-//   const [currentColor, setCurrentColor] = useState<string>(initialColor);
-//   const [position, setPosition] = useState({ top: 0, left: 0 });
-
-//   const theme = useTheme();
-//   const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
-//   useEffect(() => {
-//     if (anchorEl) {
-//       const rect = anchorEl.getBoundingClientRect();
-//       setPosition({
-//         top: rect.bottom + window.scrollY,
-//         left: rect.left + window.scrollX,
-//       });
-//     }
-//   }, [anchorEl]);
-
-//   const handleColorChange = (colorResult: any) => {
-//     setCurrentColor(colorResult.hex);
-//   };
-
-//   const addFavorite = () => {
-//     if (!favorites.includes(currentColor)) {
-//       setFavorites([...favorites, currentColor]);
-//     }
-//   };
-
-//   const handleFavoriteClick = (color: string) => {
-//     setCurrentColor(color);
-//     onClose(color);
-//   };
-
-//   return (
-//     <Modal open={open} onClose={() => onClose()}>
-//       <Box
-//         sx={{
-//           display: "flex",
-//           flexDirection: "column",
-//           alignItems: "center",
-//           justifyContent: "center",
-//           position: "absolute",
-//           top: `${position.top}px`,
-//           left: `${position.left}px`,
-//           bgcolor: "white",
-//           padding: 4,
-//           borderRadius: 2,
-//           width: fullScreen ? "90%" : 300,
-//         }}
-//       >
-//         <SketchPicker color={currentColor} onChange={handleColorChange} />
-//         <Button onClick={addFavorite} sx={{ marginTop: 2 }}>
-//           Add to Favorites
-//         </Button>
-//         <Box sx={{ marginTop: 2 }}>
-//           <Grid container spacing={1}>
-//             {favorites.map((color) => (
-//               <Grid item key={color}>
-//                 <Box
-//                   sx={{
-//                     width: 30,
-//                     height: 30,
-//                     bgcolor: color,
-//                     cursor: "pointer",
-//                   }}
-//                   onClick={() => handleFavoriteClick(color)}
-//                 />
-//               </Grid>
-//             ))}
-//           </Grid>
-//         </Box>
-//       </Box>
-//     </Modal>
-//   );
-// };
-
-// export default ColorPickerModal;
