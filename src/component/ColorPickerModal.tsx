@@ -19,29 +19,37 @@ const ColorPickerModal: React.FC<ColorPickerProps> = ({
   });
   const [currentColor, setCurrentColor] = useState<string>(initialColor);
 
-  useEffect(() => {
-    if (currentColor !== initialColor) {
-      onColorChange(currentColor);
-      // 新しい色を履歴に追加し、10件のみを保持します
-      setHistory((prevHistory) => {
-        const updatedHistory = [...prevHistory, currentColor].slice(-10);
-        // 更新された履歴をlocalStorageに保存します
-        localStorage.setItem("colorHistory", JSON.stringify(updatedHistory));
-        return updatedHistory;
-      });
-    }
-  }, [currentColor, initialColor, onColorChange]);
+  // 初期化時に履歴を更新する処理を削除しています
 
   const handleColorChange = (colorResult: any) => {
     setCurrentColor(colorResult.hex);
   };
 
-  const handleFavoriteClick = (color: string) => {
+  const handleHistoryClick = (color: string) => {
     setCurrentColor(color);
   };
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleConfirm = () => {
+    // 履歴の先頭に色を追加し、localStorageに保存します
+    const updatedHistory = [currentColor, ...history].slice(0, 10);
+    localStorage.setItem("colorHistory", JSON.stringify(updatedHistory));
+    setHistory(updatedHistory);
+
+    // 色の変更を親コンポーネントに通知します
+    onColorChange(currentColor);
+
+    // モーダルを閉じます
+    setOpen(false);
+  };
+
+  // キャンセル処理を追加
+  const handleCancel = () => {
+    // モーダルを閉じるだけで、何もしません
+    setOpen(false);
+  };
 
   const modalStyle = {
     position: "absolute" as const,
@@ -50,11 +58,19 @@ const ColorPickerModal: React.FC<ColorPickerProps> = ({
     transform: "translate(-50%, -50%)",
     bgcolor: "background.paper",
     boxShadow: 24,
-    p: 4,
-    width: 300, // モーダルの幅を固定にします
+    p: 2,
+    width: 220, // SketchPickerの幅に合わせます
     display: "flex",
     flexDirection: "column",
-    alignItems: "center", // 中央寄せにします
+    alignItems: "center",
+  };
+
+  const buttonStyle = {
+    width: "100px", // ボタンの幅を固定します
+    p: 1,
+    "&:not(:last-child)": {
+      mr: 2, // 最後のボタンでなければ右のマージンを適用します
+    },
   };
 
   return (
@@ -74,22 +90,32 @@ const ColorPickerModal: React.FC<ColorPickerProps> = ({
                 <Box>色の履歴(最後の10件):</Box>
               </Grid>
               {history.slice(0, 10).map((color, index) => (
-                <Grid item xs={2.4} key={color}>
-                  {" "}
-                  {/* 1行に5つ表示するため、12 / 5 = 2.4 */}
+                <Grid item key={index} xs={2.4}>
                   <Box
                     sx={{
-                      width: "100%", // 親のGridアイテムに合わせて幅を100%にします
-                      paddingTop: "100%", // 正方形にするためにパディングトップを100%にします
-                      borderRadius: "4px", // 角を丸くします
+                      width: "100%",
+                      paddingBottom: "100%",
+                      borderRadius: "4px",
                       bgcolor: color,
                       cursor: "pointer",
                     }}
-                    onClick={() => handleFavoriteClick(color)}
+                    onClick={() => handleHistoryClick(color)}
                   />
                 </Grid>
               ))}
             </Grid>
+          </Box>
+          <Box sx={{ marginTop: 2, width: "100%", textAlign: "center" }}>
+            <Button variant='outlined' sx={buttonStyle} onClick={handleCancel}>
+              キャンセル
+            </Button>
+            <Button
+              variant='contained'
+              sx={buttonStyle}
+              onClick={handleConfirm}
+            >
+              確定
+            </Button>
           </Box>
         </Box>
       </Modal>
