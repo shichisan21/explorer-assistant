@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { SketchPicker } from "react-color";
 import { Box, Button, Grid, Modal } from "@mui/material";
 
@@ -12,6 +12,8 @@ const ColorPickerModal: React.FC<ColorPickerProps> = ({
   onColorChange,
 }) => {
   const [open, setOpen] = useState(false);
+  const [modalStyle, setModalStyle] = useState({});
+  const buttonRef = useRef<HTMLButtonElement>(null); // ボタンへの参照を作成します
   const [history, setHistory] = useState<string[]>(() => {
     // localStorageから履歴を読み込みます
     const savedHistory = localStorage.getItem("colorHistory");
@@ -19,7 +21,9 @@ const ColorPickerModal: React.FC<ColorPickerProps> = ({
   });
   const [currentColor, setCurrentColor] = useState<string>(initialColor);
 
-  // 初期化時に履歴を更新する処理を削除しています
+  useEffect(() => {
+    onColorChange(currentColor);
+  }, []); // 空の依存配列を渡しています
 
   const handleColorChange = (colorResult: any) => {
     setCurrentColor(colorResult.hex);
@@ -29,7 +33,19 @@ const ColorPickerModal: React.FC<ColorPickerProps> = ({
     setCurrentColor(color);
   };
 
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setModalStyle({
+        position: "absolute",
+        top: rect.bottom + window.scrollY,
+        left: rect.left + window.scrollX,
+        transform: "translateY(5px)", // ボタンから少し下げる
+      });
+    }
+    setOpen(true);
+  };
+
   const handleClose = () => setOpen(false);
 
   const handleConfirm = () => {
@@ -51,20 +67,6 @@ const ColorPickerModal: React.FC<ColorPickerProps> = ({
     setOpen(false);
   };
 
-  const modalStyle = {
-    position: "absolute" as const,
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    p: 2,
-    width: 220, // SketchPickerの幅に合わせます
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  };
-
   const buttonStyle = {
     width: "100px", // ボタンの幅を固定します
     p: 1,
@@ -75,14 +77,25 @@ const ColorPickerModal: React.FC<ColorPickerProps> = ({
 
   return (
     <>
-      <Button onClick={handleOpen}>色を選択</Button>
+      <Button ref={buttonRef} onClick={handleOpen}>
+        色を選択
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby='color-picker-modal'
         aria-describedby='color-picker-modal-description'
+        sx={{ position: "absolute" }}
       >
-        <Box sx={modalStyle}>
+        <Box
+          sx={{
+            ...modalStyle,
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 2,
+            width: 220,
+          }}
+        >
           <SketchPicker color={currentColor} onChange={handleColorChange} />
           <Box sx={{ marginTop: 2, width: "100%" }}>
             <Grid container spacing={1} justifyContent='center'>
