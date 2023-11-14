@@ -1,11 +1,16 @@
 // App.tsx or any other component
 
 import React, { useState } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import ColorPickerModal from "./ColorPickerModal";
 
 const ColorPickerComponent: React.FC = () => {
   const [color, setColor] = useState<string>("#000000");
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   return (
     <Box
@@ -25,7 +30,13 @@ const ColorPickerComponent: React.FC = () => {
       <Box marginTop={2}>
         <Typography variant='h6'>Selected Color: {color}</Typography>
       </Box>
-      <ColorPickerModal initialColor={color} onColorChange={setColor} />
+      <Button onClick={handleOpen}>色を選択</Button>
+      <ColorPickerModal
+        initialColor={color}
+        onColorChange={setColor}
+        open={open}
+        setOpen={setOpen}
+      />
     </Box>
   );
 };

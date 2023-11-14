@@ -5,13 +5,16 @@ import { Box, Button, Grid, Modal } from "@mui/material";
 interface ColorPickerProps {
   initialColor: string;
   onColorChange: (color: string) => void;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 }
 
 const ColorPickerModal: React.FC<ColorPickerProps> = ({
   initialColor,
   onColorChange,
+  open,
+  setOpen,
 }) => {
-  const [open, setOpen] = useState(false);
   const [modalStyle, setModalStyle] = useState({});
   const buttonRef = useRef<HTMLButtonElement>(null); // ボタンへの参照を作成します
   const [history, setHistory] = useState<string[]>(() => {
@@ -33,18 +36,18 @@ const ColorPickerModal: React.FC<ColorPickerProps> = ({
     setCurrentColor(color);
   };
 
-  const handleOpen = () => {
-    if (buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      setModalStyle({
-        position: "absolute",
-        top: rect.bottom + window.scrollY,
-        left: rect.left + window.scrollX,
-        transform: "translateY(5px)", // ボタンから少し下げる
-      });
-    }
-    setOpen(true);
-  };
+  // const handleOpen = () => {
+  //   if (buttonRef.current) {
+  //     const rect = buttonRef.current.getBoundingClientRect();
+  //     setModalStyle({
+  //       position: "absolute",
+  //       top: rect.bottom + window.scrollY,
+  //       left: rect.left + window.scrollX,
+  //       transform: "translateY(5px)", // ボタンから少し下げる
+  //     });
+  //   }
+  //   setOpen(true);
+  // };
 
   const handleClose = () => setOpen(false);
 
@@ -77,9 +80,6 @@ const ColorPickerModal: React.FC<ColorPickerProps> = ({
 
   return (
     <>
-      <Button ref={buttonRef} onClick={handleOpen}>
-        色を選択
-      </Button>
       <Modal
         open={open}
         onClose={handleClose}
