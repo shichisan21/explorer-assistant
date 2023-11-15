@@ -7,6 +7,7 @@ interface ColorPickerProps {
   onColorChange: (color: string) => void;
   open: boolean;
   setOpen: (open: boolean) => void;
+  buttonRef: React.RefObject<HTMLButtonElement>;
 }
 
 const ColorPickerModal: React.FC<ColorPickerProps> = ({
@@ -14,9 +15,12 @@ const ColorPickerModal: React.FC<ColorPickerProps> = ({
   onColorChange,
   open,
   setOpen,
+  buttonRef,
 }) => {
-  const [modalStyle, setModalStyle] = useState({});
-  const buttonRef = useRef<HTMLButtonElement>(null); // ボタンへの参照を作成します
+  const [modalStyle, setModalStyle] = useState<React.CSSProperties>({
+    position: "absolute",
+    visibility: "hidden", // 初期値として visibility を 'hidden' に設定します。
+  });
   const [history, setHistory] = useState<string[]>(() => {
     // localStorageから履歴を読み込みます
     const savedHistory = localStorage.getItem("colorHistory");
@@ -36,18 +40,21 @@ const ColorPickerModal: React.FC<ColorPickerProps> = ({
     setCurrentColor(color);
   };
 
-  // const handleOpen = () => {
-  //   if (buttonRef.current) {
-  //     const rect = buttonRef.current.getBoundingClientRect();
-  //     setModalStyle({
-  //       position: "absolute",
-  //       top: rect.bottom + window.scrollY,
-  //       left: rect.left + window.scrollX,
-  //       transform: "translateY(5px)", // ボタンから少し下げる
-  //     });
-  //   }
-  //   setOpen(true);
-  // };
+  useEffect(() => {
+    if (open && buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setModalStyle({
+        position: "absolute",
+        top: `${rect.bottom + window.scrollY}px`,
+        left: `${rect.left + window.scrollX}px`,
+        transform: "translateY(5px)",
+        visibility: "visible",
+      });
+    } else {
+      // openがfalseのときには、visibilityをhiddenに設定します。
+      setModalStyle((prevStyle) => ({ ...prevStyle, visibility: "hidden" }));
+    }
+  }, [open, buttonRef.current]);
 
   const handleClose = () => setOpen(false);
 
