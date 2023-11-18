@@ -11,10 +11,12 @@ const useOnDrop = () => {
       const file = acceptedFiles[0];
       const formData = new FormData();
       formData.append("file", file); // 'file' はサーバー側が期待するパラメータ名に置き換えてください
+      formData.append("fileName", file.name); // ファイル名をFormDataに追加します
+      console.log("FILE CONTAIN", file);
 
       try {
         const response: AxiosResponse<any> = await axios.post(
-          "http://127.0.0.1:8000/upload-csv",
+          "http://127.0.0.1:3000/api/upload-csv",
           formData,
           {
             headers: {
