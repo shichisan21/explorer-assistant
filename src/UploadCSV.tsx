@@ -40,15 +40,7 @@ export const useOnDrop = () => {
     }
   };
 
-  // ファイルがドロップされた時に呼ばれる関数
-  const onDrop = useCallback(async (acceptedFiles: File[]) => {
-    // ここでは、単一のファイルのみを処理する
-    if (acceptedFiles.length > 0) {
-      await uploadFile(acceptedFiles[0]);
-    }
-  }, []);
-
-  return { onDrop, uploadFile, serverResponse };
+  return { uploadFile, serverResponse };
 };
 
 const UploadCSV: React.FC = () => {
