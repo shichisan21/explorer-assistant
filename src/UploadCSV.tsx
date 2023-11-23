@@ -12,13 +12,13 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 400, // 幅を固定
+  maxWidth: 400, // 最大幅も固定
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
-
 export const useOnDrop = () => {
   const [serverResponse, setServerResponse] = useState<any>(null);
 
