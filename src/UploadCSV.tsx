@@ -70,14 +70,16 @@ const UploadCSV: React.FC = () => {
 
   return (
     <>
-      <div {...getRootProps()}>
-        <input {...getInputProps()} />
-        {isDragActive ? (
-          <p>Drop the CSV file here ...</p>
-        ) : (
-          <p>Drag 'n' drop a CSV file here, or click to select a file</p>
-        )}
-      </div>
+      <Box sx={{ width: "300px" }}>
+        <div {...getRootProps()}>
+          <input {...getInputProps()} />
+          {isDragActive ? (
+            <p>Drop the CSV file here ...</p>
+          ) : (
+            <p>Drag 'n' drop a CSV file here, or click to select a file</p>
+          )}
+        </div>
+      </Box>
       <Modal
         open={showModal}
         onClose={handleClose}
