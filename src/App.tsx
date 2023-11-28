@@ -47,6 +47,7 @@ import Language from "./component/Language";
 import BackdropComponent from "./component/BackdropComponent";
 import SortComponent from "./component/SortComponent";
 import FilterComponent from "./component/FilterComponent";
+import { LambdaCheck } from "./component/LambdaCheck";
 
 function App() {
   // ログイン有効時間
@@ -184,6 +185,9 @@ function App() {
             <ListItem component={Link} to='/Language'>
               <ListItemText primary='Language' />
             </ListItem>
+            <ListItem component={Link} to='/LambdaCheck'>
+              <ListItemText primary='LambdaCheck' />
+            </ListItem>
           </Drawer>
           <div>
             最終ログイン時刻:
@@ -219,6 +223,7 @@ function App() {
                 <Route path='/mobile/Welcome' element={<Welcome />} />
                 <Route path='/mobile/List' element={<SampleList />} />
                 <Route path='/mobile/Chatroom' element={<ChatRoom />} />
+                <Route path='/LambdaCheck' element={<LambdaCheck />} />
               </>
             ) : (
               <Route path='*' element={<Navigate to='/auth' />} />
