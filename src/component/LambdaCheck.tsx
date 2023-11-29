@@ -2,13 +2,13 @@ import { Box, Button, Typography } from "@mui/material";
 import axios from "axios";
 import useState from "react";
 
-export const LambdaCheck = async () => {
-  const postToAxios = async () => {
+const LambdaCheck: React.FC = () => {
+  const postToLambda = async () => {
     try {
       const response = await axios.post(
-        "ENDPOINT ADDRESS",
+        "ENDPOINT",
         {
-          /* Your JSON data here */
+          lambdaTest: "これはテスト",
         },
         {
           headers: {
@@ -24,7 +24,9 @@ export const LambdaCheck = async () => {
 
   return (
     <Box>
-      <Button></Button>
+      <Button onClick={postToLambda}>PUSH TO POST</Button>
     </Box>
   );
 };
+
+export default LambdaCheck;

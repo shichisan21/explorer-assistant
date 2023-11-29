@@ -47,7 +47,7 @@ import Language from "./component/Language";
 import BackdropComponent from "./component/BackdropComponent";
 import SortComponent from "./component/SortComponent";
 import FilterComponent from "./component/FilterComponent";
-import { LambdaCheck } from "./component/LambdaCheck";
+import LambdaCheck from "./component/LambdaCheck";
 
 function App() {
   // ログイン有効時間
