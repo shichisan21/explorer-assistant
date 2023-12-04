@@ -28,7 +28,7 @@ const LambdaCheck: React.FC = () => {
     const newString = handleGenerateText(10); // 10文字のランダム文字列を生成
     try {
       const response: any = await axios.post(
-        "ENDPOINT",
+        import.meta.env.VITE_AWS_ENDPOINT_LAMBDA_CHECK,
         {
           lambdaTest: newString,
         },
@@ -52,7 +52,7 @@ const LambdaCheck: React.FC = () => {
         <Button onClick={postToLambda}>PUSH TO POST</Button>
       </Box>
       <Typography variant='h5'>{lambdaText?.lambdaTest}</Typography>
-      {error && <Typography color='error'>{error}</Typography>}{" "}
+      {error && <Typography color='error'>{error}</Typography>}
       {/* エラーメッセージの表示 */}
     </>
   );
