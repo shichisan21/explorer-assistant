@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface LambdaText {
   lambdaTest: string;
@@ -10,6 +10,7 @@ interface LambdaText {
 
 const LambdaCheck: React.FC = () => {
   const [lambdaText, setLambdaText] = useState<LambdaText>();
+  const [lambdaGetText, setLambdaGetText] = useState<any>();
   const [error, setError] = useState(""); // エラーメッセージのためのステート
 
   const handleGenerateText = (length: number) => {
@@ -46,6 +47,22 @@ const LambdaCheck: React.FC = () => {
     }
   };
 
+  const getDynamoResponse = async () => {
+    try {
+      const response: any = await axios.get(
+        import.meta.env.VITE_AWS_ENDPOINT_LAMBDA_GET
+      );
+      setLambdaGetText(response.data);
+    } catch (error) {
+      console.error("Get error:", error);
+      setError("Getに失敗しました。");
+    }
+  };
+
+  useEffect(() => {
+    getDynamoResponse();
+  }, []);
+
   return (
     <>
       <Box>
@@ -54,6 +71,7 @@ const LambdaCheck: React.FC = () => {
       <Typography variant='h5'>{lambdaText?.lambdaTest}</Typography>
       {error && <Typography color='error'>{error}</Typography>}
       {/* エラーメッセージの表示 */}
+      <Typography>{JSON.stringify(lambdaGetText)}</Typography>
     </>
   );
 };
