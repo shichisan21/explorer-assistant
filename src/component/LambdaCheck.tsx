@@ -27,6 +27,7 @@ const LambdaCheck: React.FC = () => {
 
   const postToLambda = async () => {
     const newString = handleGenerateText(10); // 10文字のランダム文字列を生成
+    console.log("post");
     try {
       const response: any = await axios.post(
         import.meta.env.VITE_AWS_ENDPOINT_LAMBDA_CHECK,
