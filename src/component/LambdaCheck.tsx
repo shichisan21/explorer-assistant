@@ -48,6 +48,29 @@ const LambdaCheck: React.FC = () => {
     }
   };
 
+  const putToLambda = async () => {
+    const newString = handleGenerateText(10); // 10文字のランダム文字列を生成
+    console.log("put");
+    try {
+      const response: any = await axios.post(
+        import.meta.env.VITE_AWS_ENDPOINT_LAMBDA_CHECK,
+        {
+          lambdaTest: newString,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log("Upload successful:", response.data);
+      setLambdaText(response.data);
+    } catch (error) {
+      console.error("Upload error:", error);
+      setError("アップロードに失敗しました。");
+    }
+  };
+
   const getDynamoResponse = async () => {
     try {
       const response: any = await axios.get(
@@ -68,6 +91,9 @@ const LambdaCheck: React.FC = () => {
     <>
       <Box>
         <Button onClick={postToLambda}>PUSH TO POST</Button>
+      </Box>
+      <Box>
+        <Button onClick={putToLambda}>PUT TO POST</Button>
       </Box>
       <Typography variant='h5'>{lambdaText?.lambdaTest}</Typography>
       {error && <Typography color='error'>{error}</Typography>}
