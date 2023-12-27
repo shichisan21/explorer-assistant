@@ -52,7 +52,7 @@ const LambdaCheck: React.FC = () => {
     const newString = handleGenerateText(10); // 10文字のランダム文字列を生成
     console.log("put");
     try {
-      const response: any = await axios.post(
+      const response: any = await axios.put(
         import.meta.env.VITE_AWS_ENDPOINT_LAMBDA_CHECK,
         {
           lambdaTest: newString,
@@ -63,11 +63,11 @@ const LambdaCheck: React.FC = () => {
           },
         }
       );
-      console.log("Upload successful:", response.data);
+      console.log("put successful:", response.data);
       setLambdaText(response.data);
     } catch (error) {
-      console.error("Upload error:", error);
-      setError("アップロードに失敗しました。");
+      console.error("Put error:", error);
+      setError("更新に失敗しました。");
     }
   };
 
