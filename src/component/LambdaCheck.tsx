@@ -64,7 +64,7 @@ const LambdaCheck: React.FC = () => {
         }
       );
       console.log("put successful:", response.data);
-      setLambdaText(response.data);
+      // setLambdaText(response.data);
     } catch (error) {
       console.error("Put error:", error);
       setError("更新に失敗しました。");
