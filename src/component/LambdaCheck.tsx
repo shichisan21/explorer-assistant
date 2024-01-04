@@ -13,6 +13,19 @@ const LambdaCheck: React.FC = () => {
   const [lambdaGetText, setLambdaGetText] = useState<any>();
   const [error, setError] = useState(""); // エラーメッセージのためのステート
 
+  // データをリスト形式で表示する関数
+  const renderDataList = () => {
+    if (!lambdaGetText) return <Typography>Loading...</Typography>;
+
+    return lambdaGetText.map((item: any, index: number) => (
+      <Box key={index} my={2}>
+        {Object.entries(item).map(([key, value]) => (
+          <Typography key={key}>{`${key}: ${value}`}</Typography>
+        ))}
+      </Box>
+    ));
+  };
+
   const handleGenerateText = (length: number) => {
     const characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -98,7 +111,10 @@ const LambdaCheck: React.FC = () => {
       <Typography variant='h5'>{lambdaText?.lambdaTest}</Typography>
       {error && <Typography color='error'>{error}</Typography>}
       {/* エラーメッセージの表示 */}
-      <Typography>{JSON.stringify(lambdaGetText)}</Typography>
+      <Box>
+        <Typography variant='h6'>GETリクエストの結果：</Typography>
+        {renderDataList()}
+      </Box>
     </>
   );
 };
