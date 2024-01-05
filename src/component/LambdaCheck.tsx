@@ -1,4 +1,13 @@
 import { Box, Button, Typography } from "@mui/material";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+} from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -14,16 +23,32 @@ const LambdaCheck: React.FC = () => {
   const [error, setError] = useState(""); // エラーメッセージのためのステート
 
   // データをリスト形式で表示する関数
-  const renderDataList = () => {
+  const renderDataTable = () => {
     if (!lambdaGetText) return <Typography>Loading...</Typography>;
 
-    return lambdaGetText.map((item: any, index: number) => (
-      <Box key={index} my={2}>
-        {Object.entries(item).map(([key, value]) => (
-          <Typography key={key}>{`${key}: ${value}`}</Typography>
-        ))}
-      </Box>
-    ));
+    return (
+      <TableContainer component={Paper}>
+        <Table aria-label='simple table'>
+          <TableHead>
+            <TableRow>
+              {/* カラムヘッダーの生成 */}
+              {Object.keys(lambdaGetText[0]).map((key) => (
+                <TableCell key={key}>{key}</TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {lambdaGetText.map((item: any, index: number) => (
+              <TableRow key={index}>
+                {Object.entries(item).map(([key, value]) => (
+                  <TableCell key={key}>{String(value)}</TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
   };
 
   const handleGenerateText = (length: number) => {
@@ -113,7 +138,7 @@ const LambdaCheck: React.FC = () => {
       {/* エラーメッセージの表示 */}
       <Box>
         <Typography variant='h6'>GETリクエストの結果：</Typography>
-        {renderDataList()}
+        {renderDataTable()}
       </Box>
     </>
   );
