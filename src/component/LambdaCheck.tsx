@@ -8,6 +8,7 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -31,10 +32,11 @@ const LambdaCheck: React.FC = () => {
         <Table aria-label='simple table'>
           <TableHead>
             <TableRow>
-              {/* カラムヘッダーの生成 */}
+              {/* 既存のカラムヘッダー */}
               {Object.keys(lambdaGetText[0]).map((key) => (
                 <TableCell key={key}>{key}</TableCell>
               ))}
+              <TableCell>Tag</TableCell> {/* 新しい列ヘッダー */}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -43,6 +45,9 @@ const LambdaCheck: React.FC = () => {
                 {Object.entries(item).map(([key, value]) => (
                   <TableCell key={key}>{String(value)}</TableCell>
                 ))}
+                <TableCell>
+                  <EditIcon /> {/* 鉛筆アイコンを表示 */}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -50,7 +55,6 @@ const LambdaCheck: React.FC = () => {
       </TableContainer>
     );
   };
-
   const handleGenerateText = (length: number) => {
     const characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
