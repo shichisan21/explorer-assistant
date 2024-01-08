@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Modal } from "@mui/material";
 import {
   Table,
   TableBody,
@@ -20,9 +20,27 @@ interface LambdaText {
 
 const LambdaCheck: React.FC = () => {
   const [lambdaText, setLambdaText] = useState<LambdaText>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
   const [lambdaGetText, setLambdaGetText] = useState<any>();
   const [error, setError] = useState(""); // エラーメッセージのためのステート
 
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const handleEditClick = (id: number) => {
+    setSelectedId(id);
+    setIsModalOpen(true);
+  };
   // データをリスト形式で表示する関数
   const renderDataTable = () => {
     if (!lambdaGetText) return <Typography>Loading...</Typography>;
@@ -46,7 +64,7 @@ const LambdaCheck: React.FC = () => {
                   <TableCell key={key}>{String(value)}</TableCell>
                 ))}
                 <TableCell>
-                  <EditIcon /> {/* 鉛筆アイコンを表示 */}
+                  <EditIcon onClick={() => handleEditClick(item.id)} />
                 </TableCell>
               </TableRow>
             ))}
@@ -55,6 +73,15 @@ const LambdaCheck: React.FC = () => {
       </TableContainer>
     );
   };
+
+  const renderModal = () => (
+    <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+      <Box sx={ style }>
+        <Typography>ID: {selectedId}</Typography>
+      </Box>
+    </Modal>
+  );
+
   const handleGenerateText = (length: number) => {
     const characters =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -144,6 +171,7 @@ const LambdaCheck: React.FC = () => {
         <Typography variant='h6'>GETリクエストの結果：</Typography>
         {renderDataTable()}
       </Box>
+      {renderModal()}
     </>
   );
 };
