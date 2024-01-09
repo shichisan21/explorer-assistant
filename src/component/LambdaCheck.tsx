@@ -1,4 +1,4 @@
-import { Box, Button, Typography, Modal } from "@mui/material";
+import { Box, Button, Typography, Modal, TextField } from "@mui/material";
 import {
   Table,
   TableBody,
@@ -75,11 +75,12 @@ const LambdaCheck: React.FC = () => {
   };
 
   const renderModal = () => (
-    <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-      <Box sx={ style }>
-        <Typography>ID: {selectedId}</Typography>
-      </Box>
-    </Modal>
+      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <Box sx={style}>
+          <Typography>ID: {selectedId}</Typography>
+          <TextField></TextField>
+        </Box>
+      </Modal>
   );
 
   const handleGenerateText = (length: number) => {
