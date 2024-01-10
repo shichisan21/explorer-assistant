@@ -23,7 +23,8 @@ const LambdaCheck: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [lambdaGetText, setLambdaGetText] = useState<any>();
-  const [error, setError] = useState(""); // エラーメッセージのためのステート
+  const [error, setError] = useState("");
+  const [tagText, setTagText] = useState<string>("");
 
   const style = {
     position: "absolute",
@@ -41,6 +42,13 @@ const LambdaCheck: React.FC = () => {
     setSelectedId(id);
     setIsModalOpen(true);
   };
+
+  const handleInputText = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    setTagText(event.target.value);
+  };
+
   // データをリスト形式で表示する関数
   const renderDataTable = () => {
     if (!lambdaGetText) return <Typography>Loading...</Typography>;
@@ -75,12 +83,12 @@ const LambdaCheck: React.FC = () => {
   };
 
   const renderModal = () => (
-      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <Box sx={style}>
-          <Typography>ID: {selectedId}</Typography>
-          <TextField></TextField>
-        </Box>
-      </Modal>
+    <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+      <Box sx={style}>
+        <Typography>ID: {selectedId}</Typography>
+        <TextField onChange={handleInputText} value={tagText} />
+      </Box>
+    </Modal>
   );
 
   const handleGenerateText = (length: number) => {
