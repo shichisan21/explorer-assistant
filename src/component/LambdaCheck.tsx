@@ -58,11 +58,10 @@ const LambdaCheck: React.FC = () => {
         <Table aria-label='simple table'>
           <TableHead>
             <TableRow>
-              {/* 既存のカラムヘッダー */}
-              {Object.keys(lambdaGetText[0]).map((key) => (
-                <TableCell key={key}>{key}</TableCell>
+              {Object.keys(lambdaGetText[0]).map((key, index) => (
+                <TableCell key={index}>{key}</TableCell>
               ))}
-              <TableCell>Tag</TableCell> {/* 新しい列ヘッダー */}
+              <TableCell>Tag</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -85,7 +84,7 @@ const LambdaCheck: React.FC = () => {
   const renderModal = () => (
     <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
       <Box sx={style}>
-        <Typography>ID: {selectedId}</Typography>
+        <Typography>ID:{selectedId}</Typography>
         <TextField onChange={handleInputText} value={tagText} />
       </Box>
     </Modal>
