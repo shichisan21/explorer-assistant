@@ -86,6 +86,14 @@ const LambdaCheck: React.FC = () => {
       <Box sx={style}>
         <Typography>ID:{selectedId}</Typography>
         <TextField onChange={handleInputText} value={tagText} />
+        <Box sx={{ display: "flex", justifyContent: "center" }}>
+          <Button variant='contained' sx={{ margin: 2 }}>
+            SUBMIT
+          </Button>
+          <Button variant='contained' sx={{ margin: 2 }}>
+            Cancel
+          </Button>
+        </Box>
       </Box>
     </Modal>
   );
