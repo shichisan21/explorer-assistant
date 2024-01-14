@@ -43,6 +43,10 @@ const LambdaCheck: React.FC = () => {
     setIsModalOpen(true);
   };
 
+  const handleSubmit = async () => {
+    await putToLambda();
+  };
+
   const handleInputText = (
     event: React.ChangeEvent<HTMLInputElement>
   ): void => {
@@ -87,7 +91,7 @@ const LambdaCheck: React.FC = () => {
         <Typography>ID:{selectedId}</Typography>
         <TextField onChange={handleInputText} value={tagText} />
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Button variant='contained' sx={{ margin: 2 }}>
+          <Button variant='contained' onClick={handleSubmit} sx={{ margin: 2 }}>
             SUBMIT
           </Button>
           <Button variant='contained' sx={{ margin: 2 }}>
