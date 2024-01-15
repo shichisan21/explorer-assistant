@@ -45,6 +45,7 @@ const LambdaCheck: React.FC = () => {
 
   const handleSubmit = async () => {
     await putToLambda();
+    setIsModalOpen(false);
   };
 
   const handleInputText = (
