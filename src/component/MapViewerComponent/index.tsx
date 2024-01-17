@@ -2,6 +2,23 @@ import React from "react";
 import { Map, GoogleApiWrapper, Marker, GoogleAPI } from "google-maps-react";
 import googleMapReact from "google-map-react";
 
+export const useMap = ({ defaultPosition }: Props) => {
+  // googleMapsApiKeyは自分で取得したものに差し替えてください
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map",
+    googleMapsApiKey,
+  });
+
+  const onLoad = (map: Map) => {
+    const bounds = new window.google.maps.LatLngBounds(defaultPosition);
+    map.fitBounds(bounds);
+  };
+
+  const onUnmount = useCallback(() => {}, []);
+
+  return { isLoaded, onLoad, onUnmount };
+};
+
 const MapViewerComponent = (props: GoogleAPI) => {
   const mapStyles = {
     width: "100%",
