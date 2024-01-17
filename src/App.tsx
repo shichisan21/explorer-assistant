@@ -48,6 +48,7 @@ import BackdropComponent from "./component/BackdropComponent";
 import SortComponent from "./component/SortComponent";
 import FilterComponent from "./component/FilterComponent";
 import LambdaCheck from "./component/LambdaCheck";
+import MapViewerComponent from "./component/MapViewerComponent";
 
 function App() {
   // ログイン有効時間
@@ -188,6 +189,9 @@ function App() {
             <ListItem component={Link} to='/LambdaCheck'>
               <ListItemText primary='LambdaCheck' />
             </ListItem>
+            <ListItem component={Link} to='/MapViewerComponent'>
+              <ListItemText primary='MapViewerComponent' />
+            </ListItem>
           </Drawer>
           <div>
             最終ログイン時刻:
@@ -224,6 +228,10 @@ function App() {
                 <Route path='/mobile/List' element={<SampleList />} />
                 <Route path='/mobile/Chatroom' element={<ChatRoom />} />
                 <Route path='/LambdaCheck' element={<LambdaCheck />} />
+                <Route
+                  path='/MapViewerComponent'
+                  element={<MapViewerComponent />}
+                />
               </>
             ) : (
               <Route path='*' element={<Navigate to='/auth' />} />
