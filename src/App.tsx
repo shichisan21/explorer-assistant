@@ -76,6 +76,15 @@ function App() {
     ? import.meta.env.VITE_APP_API_URL
     : "#";
 
+  const position = {
+    lat: 43.035718552968376,
+    lng: 141.46244422700855,
+  } as google.maps.LatLngLiteral;
+
+  const render = (status: Status) => {
+    return <h1>{status}</h1>;
+  };
+
   useEffect(() => {
     const storedTime = localStorage.getItem("loggedInTime");
     if (storedTime) {
@@ -128,6 +137,14 @@ function App() {
               </IconButton>
               <Typography variant='h6'>Sample Apps</Typography>
             </Toolbar>
+            <div className='flex flex-row w-1/2 justify-center'>
+              <Wrapper apiKey='api_key' render={render}>
+                <Map
+                  style={{ width: "100%", aspectRatio: "16 / 9" }}
+                  center={position}
+                />
+              </Wrapper>
+            </div>
           </AppBar>
           <Drawer anchor='left' open={drawerOpen} onClose={toggleDrawer}>
             <List>
