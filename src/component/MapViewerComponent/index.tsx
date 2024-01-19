@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from "react";
+
 type MapProps = google.maps.MapOptions & {
   style: { [key: string]: string };
   children?:
@@ -5,7 +7,11 @@ type MapProps = google.maps.MapOptions & {
     | React.ReactElement<google.maps.MarkerOptions>;
 };
 
-export const Map: React.FC<MapProps> = ({ children, style, ...options }) => {
+export const MapViewerComponent: React.FC<MapProps> = ({
+  children,
+  style,
+  ...options
+}) => {
   const ref = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map>();
 
