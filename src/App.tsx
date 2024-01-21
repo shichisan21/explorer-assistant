@@ -145,7 +145,7 @@ function App() {
                 render={render}
               >
                 <MapViewerComponent
-                  style={{ width: "100%", aspectRatio: "16 / 9" }}
+                  style={{ width: "100%", aspectRatio: "4 / 3" }}
                   center={position}
                 />
               </Wrapper>
