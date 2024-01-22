@@ -19,7 +19,7 @@ export const MapViewerComponent: React.FC<MapProps> = ({
     if (ref.current && !map) {
       const option = {
         center: options.center,
-        zoom: 16,
+        zoom: 20,
       };
       setMap(new window.google.maps.Map(ref.current, option));
     }
