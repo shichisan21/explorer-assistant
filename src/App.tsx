@@ -51,6 +51,7 @@ import FilterComponent from "./component/FilterComponent";
 import LambdaCheck from "./component/LambdaCheck";
 import { Status, Wrapper } from "@googlemaps/react-wrapper";
 import { MapViewerComponent } from "./component/MapViewerComponent";
+import { Marker } from "./component/MapViewerComponent/Marker";
 
 function App() {
   // ログイン有効時間
@@ -79,8 +80,8 @@ function App() {
     : "#";
 
   const position = {
-    lat: 43.035718552968376,
-    lng: 141.46244422700855,
+    lat: 34.2422,
+    lng: 132.555,
   } as google.maps.LatLngLiteral;
 
   const render = (status: Status) => {
@@ -147,7 +148,9 @@ function App() {
                 <MapViewerComponent
                   style={{ width: "100%", aspectRatio: "4 / 3" }}
                   center={position}
-                />
+                >
+                  <Marker position={position} />
+                </MapViewerComponent>
               </Wrapper>
             </Box>
           </AppBar>

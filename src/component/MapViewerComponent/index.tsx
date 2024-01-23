@@ -1,4 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  Children,
+  isValidElement,
+  useEffect,
+  useRef,
+  useState,
+  cloneElement,
+} from "react";
 
 type MapProps = google.maps.MapOptions & {
   style: { [key: string]: string };
@@ -19,11 +26,20 @@ export const MapViewerComponent: React.FC<MapProps> = ({
     if (ref.current && !map) {
       const option = {
         center: options.center,
-        zoom: 20,
+        zoom: 15,
       };
       setMap(new window.google.maps.Map(ref.current, option));
     }
   }, [ref, map]);
 
-  return <div ref={ref} style={style} />;
+  return (
+    <>
+      <div ref={ref} style={style} />
+      {Children.map(children, (child) => {
+        if (isValidElement(child)) {
+          return cloneElement(child, { map });
+        }
+      })}
+    </>
+  );
 };
