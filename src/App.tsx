@@ -74,15 +74,14 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(checkIsLoggedIn());
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [lastLoginTime, setLastLoginTime] = useState<string | null>(null);
+  const [position, setPosition] = useState<google.maps.LatLngLiteral>({
+    lat: 34.2422,
+    lng: 132.555,
+  });
 
   const url = import.meta.env.VITE_APP_API_URL
     ? import.meta.env.VITE_APP_API_URL
     : "#";
-
-  const position = {
-    lat: 34.2422,
-    lng: 132.555,
-  } as google.maps.LatLngLiteral;
 
   const render = (status: Status) => {
     return <h1>{status}</h1>;
@@ -122,6 +121,11 @@ function App() {
     setDrawerOpen(!drawerOpen);
   };
 
+  const handleMapClick = (lat: any, lng: any) => {
+    console.log("クリック位置", lat, lng);
+    setPosition({ lat: lat, lng: lng });
+  };
+
   return (
     <Router>
       {loading ? (
@@ -148,6 +152,7 @@ function App() {
                 <MapViewerComponent
                   style={{ width: "100%", aspectRatio: "4 / 3" }}
                   center={position}
+                  onMapClick={handleMapClick}
                 >
                   <Marker position={position} />
                 </MapViewerComponent>

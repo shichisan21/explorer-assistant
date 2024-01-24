@@ -12,11 +12,13 @@ type MapProps = google.maps.MapOptions & {
   children?:
     | React.ReactElement<google.maps.MarkerOptions>[]
     | React.ReactElement<google.maps.MarkerOptions>;
+  onMapClick?: (lat: number, lng: number) => void;
 };
 
 export const MapViewerComponent: React.FC<MapProps> = ({
   children,
   style,
+  onMapClick,
   ...options
 }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -26,11 +28,18 @@ export const MapViewerComponent: React.FC<MapProps> = ({
     if (ref.current && !map) {
       const option = {
         center: options.center,
-        zoom: 15,
+        zoom: options.zoom || 15,
       };
-      setMap(new window.google.maps.Map(ref.current, option));
+      const initMap = new window.google.maps.Map(ref.current, option);
+
+      if (onMapClick) {
+        initMap.addListener("click", (e) => {
+          onMapClick(e.latLng.lat(), e.latLng.lng());
+        });
+      }
+      setMap(initMap);
     }
-  }, [ref, map]);
+  }, [ref, map, options, onMapClick]);
 
   return (
     <>
