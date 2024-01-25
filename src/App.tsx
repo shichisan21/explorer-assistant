@@ -132,6 +132,22 @@ function App() {
         <p>Loading...</p> // もしくはローディングスピナー
       ) : (
         <>
+          <Box sx={{ minWidth: 500, marginBottom: 10 }}>
+            <Wrapper
+              apiKey={import.meta.env.VITE_APP_MAP_API_KEY}
+              render={render}
+            >
+              <MapViewerComponent
+                style={{ width: "100%", aspectRatio: "4 / 3" }}
+                center={position}
+                onMapClick={handleMapClick}
+              >
+                <Marker position={position} />
+              </MapViewerComponent>
+            </Wrapper>
+            <Typography>Latitude: {position.lat}</Typography>
+            <Typography>Longtitude: {position.lng}</Typography>
+          </Box>
           <AppBar position='static'>
             <Toolbar>
               <IconButton
@@ -144,20 +160,6 @@ function App() {
               </IconButton>
               <Typography variant='h6'>Sample Apps</Typography>
             </Toolbar>
-            <Box sx={{ minWidth: 500 }}>
-              <Wrapper
-                apiKey={import.meta.env.VITE_APP_MAP_API_KEY}
-                render={render}
-              >
-                <MapViewerComponent
-                  style={{ width: "100%", aspectRatio: "4 / 3" }}
-                  center={position}
-                  onMapClick={handleMapClick}
-                >
-                  <Marker position={position} />
-                </MapViewerComponent>
-              </Wrapper>
-            </Box>
           </AppBar>
           <Drawer anchor='left' open={drawerOpen} onClose={toggleDrawer}>
             <List>
