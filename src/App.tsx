@@ -26,6 +26,7 @@ import {
   ListItem,
   ListItemText,
   Box,
+  TextField,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -78,6 +79,8 @@ function App() {
     lat: 34.2422,
     lng: 132.555,
   });
+  const [lat, setLat] = useState<string>("");
+  const [lng, setLng] = useState<string>("");
 
   const url = import.meta.env.VITE_APP_API_URL
     ? import.meta.env.VITE_APP_API_URL
@@ -126,6 +129,10 @@ function App() {
     setPosition({ lat: lat, lng: lng });
   };
 
+  const handleChangeText = (e: any) => {
+    setLat(e.target.value);
+  };
+
   return (
     <Router>
       {loading ? (
@@ -147,6 +154,7 @@ function App() {
             </Wrapper>
             <Typography>Latitude: {position.lat}</Typography>
             <Typography>Longtitude: {position.lng}</Typography>
+            <TextField onChange={handleChangeText} value={lat}></TextField>
           </Box>
           <AppBar position='static'>
             <Toolbar>
