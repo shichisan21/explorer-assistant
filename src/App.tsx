@@ -154,7 +154,14 @@ function App() {
             </Wrapper>
             <Typography>Latitude: {position.lat}</Typography>
             <Typography>Longtitude: {position.lng}</Typography>
-            <TextField onChange={handleChangeText} value={lat}></TextField>
+            <Box sx={{ display: "flex", flexDirection: "Row" }}>
+              <Typography>Latitude: </Typography>
+              <TextField onChange={handleChangeText} value={lat}></TextField>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "Row" }}>
+              <Typography>Longtitude: </Typography>
+              <TextField onChange={handleChangeText} value={lat}></TextField>
+            </Box>
           </Box>
           <AppBar position='static'>
             <Toolbar>
