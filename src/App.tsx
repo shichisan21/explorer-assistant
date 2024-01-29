@@ -7,7 +7,7 @@
  */
 
 import "./App.css";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -27,6 +27,7 @@ import {
   ListItemText,
   Box,
   TextField,
+  Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -114,6 +115,19 @@ function App() {
     }
   }, [loggedIn]);
 
+  const setPositionValues = () => {
+    const latValue = parseFloat(lat);
+    const lngValue = parseFloat(lng);
+
+    // 緯度と経度が有効な数値であることを確認
+    if (!isNaN(latValue) && !isNaN(lngValue)) {
+      setPosition({ lat: latValue, lng: lngValue });
+    } else {
+      // 無効な入力の場合のエラー処理（アラートなど）
+      alert("Invalid latitude or longitude");
+    }
+  };
+
   const logOut = () => {
     setLoggedIn(false);
     localStorage.removeItem("loggedIn");
@@ -129,8 +143,12 @@ function App() {
     setPosition({ lat: lat, lng: lng });
   };
 
-  const handleChangeText = (e: any) => {
+  const handleChangeLat = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLat(e.target.value);
+  };
+
+  const handleChangeLng = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLng(e.target.value);
   };
 
   return (
@@ -154,13 +172,21 @@ function App() {
             </Wrapper>
             <Typography>Latitude: {position.lat}</Typography>
             <Typography>Longtitude: {position.lng}</Typography>
-            <Box sx={{ display: "flex", flexDirection: "Row" }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "Row",
+                alignItems: "center",
+                gap: 2,
+              }}
+            >
               <Typography>Latitude: </Typography>
-              <TextField onChange={handleChangeText} value={lat}></TextField>
-            </Box>
-            <Box sx={{ display: "flex", flexDirection: "Row" }}>
-              <Typography>Longtitude: </Typography>
-              <TextField onChange={handleChangeText} value={lat}></TextField>
+              <TextField onChange={handleChangeLat} value={lat} />
+              <Typography>Longitude: </Typography>
+              <TextField onChange={handleChangeLng} value={lng} />
+              <Button variant='contained' onClick={setPositionValues}>
+                SET
+              </Button>
             </Box>
           </Box>
           <AppBar position='static'>
