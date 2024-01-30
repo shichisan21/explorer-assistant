@@ -154,7 +154,7 @@ function App() {
   return (
     <Router>
       {loading ? (
-        <p>Loading...</p> // もしくはローディングスピナー
+        <p>Loading...</p>
       ) : (
         <>
           <Box sx={{ minWidth: 500, marginBottom: 10 }}>
