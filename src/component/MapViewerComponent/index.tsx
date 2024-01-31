@@ -37,7 +37,12 @@ export const MapViewerComponent: React.FC<MapProps> = ({
           onMapClick(e.latLng.lat(), e.latLng.lng());
         });
       }
-      setMap(initMap);
+
+      if (!map) {
+        setMap(initMap);
+      } else {
+        initMap.setOptions(options);
+      }
     }
   }, [ref, map, options, onMapClick]);
 
