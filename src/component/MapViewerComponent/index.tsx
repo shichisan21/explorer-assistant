@@ -25,14 +25,19 @@ export const MapViewerComponent: React.FC<MapProps> = ({
   const [map, setMap] = useState<google.maps.Map>();
 
   useEffect(() => {
-    if (ref.current && !map) {
-      const option = {
-        center: options.center,
-        zoom: options.zoom || 15,
-      };
-      const initMap = new window.google.maps.Map(ref.current, option);
+    if (ref.current) {
+      // map が既に存在する場合は新たに作成しない
+      const initMap =
+        map ||
+        new window.google.maps.Map(ref.current, {
+          center: options.center,
+          zoom: options.zoom || 15,
+        });
+
+      initMap.setOptions(options); // マップオプションを更新
 
       if (onMapClick) {
+        window.google.maps.event.clearListeners(initMap, "click"); // 既存のリスナーをクリア
         initMap.addListener("click", (e) => {
           onMapClick(e.latLng.lat(), e.latLng.lng());
         });
@@ -40,8 +45,6 @@ export const MapViewerComponent: React.FC<MapProps> = ({
 
       if (!map) {
         setMap(initMap);
-      } else {
-        initMap.setOptions(options);
       }
     }
   }, [ref, map, options, onMapClick]);
