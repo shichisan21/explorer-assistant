@@ -25,6 +25,7 @@ export const MapViewerComponent: React.FC<MapProps> = ({
   const [map, setMap] = useState<google.maps.Map>();
 
   useEffect(() => {
+    console.log("OPTIONS", children, options);
     if (ref.current) {
       // map が既に存在する場合は新たに作成しない
       const initMap =
