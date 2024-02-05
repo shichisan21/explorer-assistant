@@ -5,7 +5,7 @@ export const Marker: React.FC<google.maps.MarkerOptions> = (options) => {
 
   useEffect(() => {
     if (!markar) {
-      setMarkar(new google.maps.Marker());
+      setMarkar(new google.maps.Marker({ draggable: true }));
     }
 
     return () => {
