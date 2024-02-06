@@ -8,6 +8,13 @@ export const Marker: React.FC<google.maps.MarkerOptions> = (options) => {
       setMarkar(new google.maps.Marker({ draggable: true }));
     }
 
+    if (markar) {
+      google.maps.event.addListener(markar, "dragend", function (e) {
+        console.log("e", e.latLng.lat());
+        console.log("e", e.latLng.lng());
+      });
+    }
+
     return () => {
       if (markar) {
         markar.setMap(null);
