@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 
-export const Marker: React.FC<google.maps.MarkerOptions> = (options) => {
+interface MarkerProps extends google.maps.MarkerOptions {
+  setPosition: (lat: number, lng: number) => void;
+}
+
+export const Marker: React.FC<MarkerProps> = (options, setPosition) => {
   const [markar, setMarkar] = useState<google.maps.Marker>();
 
   useEffect(() => {
@@ -12,6 +16,7 @@ export const Marker: React.FC<google.maps.MarkerOptions> = (options) => {
       google.maps.event.addListener(markar, "dragend", function (e) {
         console.log("e", e.latLng.lat());
         console.log("e", e.latLng.lng());
+        setPosition({ lat: e.latLng.lat(), lng: e.latLng.lng() });
       });
     }
 

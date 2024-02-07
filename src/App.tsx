@@ -167,7 +167,10 @@ function App() {
                 center={position}
                 onMapClick={handleMapClick}
               >
-                <Marker position={position} />
+                <Marker
+                  position={position}
+                  setPosition={(lat, lng) => setPosition({ lat, lng })}
+                />
               </MapViewerComponent>
             </Wrapper>
             <Typography>Latitude: {position.lat}</Typography>
