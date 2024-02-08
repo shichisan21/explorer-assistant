@@ -4,7 +4,7 @@ interface MarkerProps extends google.maps.MarkerOptions {
   setPosition: (lat: number, lng: number) => void;
 }
 
-export const Marker: React.FC<MarkerProps> = (options, setPosition) => {
+export const Marker: React.FC<MarkerProps> = ({ setPosition, ...options }) => {
   const [markar, setMarkar] = useState<google.maps.Marker>();
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export const Marker: React.FC<MarkerProps> = (options, setPosition) => {
       google.maps.event.addListener(markar, "dragend", function (e) {
         console.log("e", e.latLng.lat());
         console.log("e", e.latLng.lng());
-        setPosition({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+        setPosition(e.latLng.lat(), e.latLng.lng());
       });
     }
 
