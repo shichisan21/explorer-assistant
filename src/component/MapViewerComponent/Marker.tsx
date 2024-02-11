@@ -18,7 +18,6 @@ export const Marker: React.FC<MarkerProps> = ({ setPosition, ...options }) => {
         console.log("e", e.latLng.lng());
         const newPosition = { lat: e.latLng.lat(), lng: e.latLng.lng() };
         setPosition(e.latLng.lat(), e.latLng.lng());
-        map?.panTo();
       });
     }
 
