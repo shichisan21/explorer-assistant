@@ -80,6 +80,8 @@ function App() {
     lat: 34.2422,
     lng: 132.555,
   });
+  const [markerPosition, setMarkerPosition] =
+    useState<google.maps.LatLngLiteral>();
   const [lat, setLat] = useState<string>("");
   const [lng, setLng] = useState<string>("");
 
@@ -140,7 +142,7 @@ function App() {
 
   const handleMapClick = (lat: any, lng: any) => {
     console.log("クリック位置", lat, lng);
-    setPosition({ lat: lat, lng: lng });
+    setMarkerPosition({ lat: lat, lng: lng });
   };
 
   const handleChangeLat = (e: React.ChangeEvent<HTMLInputElement>) => {

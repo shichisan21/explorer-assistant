@@ -5,15 +5,15 @@ interface MarkerProps extends google.maps.MarkerOptions {
 }
 
 export const Marker: React.FC<MarkerProps> = ({ setPosition, ...options }) => {
-  const [markar, setMarkar] = useState<google.maps.Marker>();
+  const [marker, setMarker] = useState<google.maps.Marker>();
 
   useEffect(() => {
-    if (!markar) {
-      setMarkar(new google.maps.Marker({ draggable: true }));
+    if (!marker) {
+      setMarker(new google.maps.Marker({ draggable: true }));
     }
 
-    if (markar) {
-      google.maps.event.addListener(markar, "dragend", function (e) {
+    if (marker) {
+      google.maps.event.addListener(marker, "dragend", function (e) {
         console.log("e", e.latLng.lat());
         console.log("e", e.latLng.lng());
         const newPosition = { lat: e.latLng.lat(), lng: e.latLng.lng() };
@@ -22,17 +22,17 @@ export const Marker: React.FC<MarkerProps> = ({ setPosition, ...options }) => {
     }
 
     return () => {
-      if (markar) {
-        markar.setMap(null);
+      if (marker) {
+        marker.setMap(null);
       }
     };
-  }, [markar]);
+  }, [marker]);
 
   useEffect(() => {
-    if (markar) {
-      markar.setOptions(options);
+    if (marker) {
+      marker.setOptions(options);
     }
-  }, [markar, options]);
+  }, [marker, options]);
 
   return null;
 };

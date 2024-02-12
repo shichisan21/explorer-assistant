@@ -41,7 +41,6 @@ export const MapViewerComponent: React.FC<MapProps> = ({
         window.google.maps.event.clearListeners(initMap, "click"); // 既存のリスナーをクリア
         initMap.addListener("click", (e) => {
           map?.panTo({ lat: e.latLng.lat(), lng: e.latLng.lng() });
-          // onMapClick(e.latLng.lat(), e.latLng.lng());
         });
       }
 
