@@ -32,7 +32,7 @@ export const MapViewerComponent: React.FC<MapProps> = ({
         map ||
         new window.google.maps.Map(ref.current, {
           center: options.center,
-          zoom: options.zoom || 15,
+          zoom: options.zoom || 12,
         });
 
       initMap.setOptions(options); // マップオプションを更新
