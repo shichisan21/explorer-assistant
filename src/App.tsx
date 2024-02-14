@@ -55,6 +55,12 @@ import { Status, Wrapper } from "@googlemaps/react-wrapper";
 import { MapViewerComponent } from "./component/MapViewerComponent";
 import { Marker } from "./component/MapViewerComponent/Marker";
 
+type PositionStore = {
+  id: number;
+  lat: number;
+  lng: number;
+};
+
 function App() {
   // ログイン有効時間
   const EXPIRY_TIME = 1000 * 60 * 60; // 1時間（ミリ秒単位）
@@ -80,6 +86,7 @@ function App() {
     lat: 34.2422,
     lng: 132.555,
   });
+  const [positionStore, setPositionStore] = useState<PositionStore[]>([]);
   const [markerPosition, setMarkerPosition] =
     useState<google.maps.LatLngLiteral>();
   const [lat, setLat] = useState<string>("");
@@ -124,6 +131,10 @@ function App() {
     // 緯度と経度が有効な数値であることを確認
     if (!isNaN(latValue) && !isNaN(lngValue)) {
       setPosition({ lat: latValue, lng: lngValue });
+      setPositionStore([
+        ...positionStore,
+        { id: Date.now(), lat: latValue, lng: lngValue },
+      ]);
     } else {
       // 無効な入力の場合のエラー処理（アラートなど）
       alert("Invalid latitude or longitude");
@@ -193,6 +204,9 @@ function App() {
                 SET
               </Button>
             </Box>
+            {positionStore.map((data) => (
+              <Typography>{data.id}</Typography>
+            ))}
           </Box>
           <AppBar position='static'>
             <Toolbar>
