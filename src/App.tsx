@@ -164,6 +164,10 @@ function App() {
     setLng(e.target.value);
   };
 
+  const onCallHistoryItem = (lat: number, lng: number) => {
+    setPosition({ lat: lat, lng: lng });
+  };
+
   return (
     <Router>
       {loading ? (
@@ -205,7 +209,18 @@ function App() {
               </Button>
             </Box>
             {positionStore.map((data) => (
-              <Typography>{data.id}</Typography>
+              <Box>
+                <Typography>
+                  ID:{data.id} Lat:{data.lat} Lng:{data.lng}
+                  <Button
+                    variant='contained'
+                    sx={{ margin: 2 }}
+                    onClick={() => onCallHistoryItem(data.lat, data.lng)}
+                  >
+                    復旧
+                  </Button>
+                </Typography>
+              </Box>
             ))}
           </Box>
           <AppBar position='static'>
