@@ -168,6 +168,11 @@ function App() {
     setPosition({ lat: lat, lng: lng });
   };
 
+  const onDeleteHistoryItem = (id: number) => {
+    const filterdItem = positionStore.filter((item) => item.id != id);
+    setPositionStore(filterdItem);
+  };
+
   return (
     <Router>
       {loading ? (
@@ -208,8 +213,8 @@ function App() {
                 SET
               </Button>
             </Box>
-            {positionStore.map((data) => (
-              <Box>
+            {positionStore.map((data, id) => (
+              <Box key={id}>
                 <Typography>
                   ID:{data.id} Lat:{data.lat} Lng:{data.lng}
                   <Button
@@ -218,6 +223,13 @@ function App() {
                     onClick={() => onCallHistoryItem(data.lat, data.lng)}
                   >
                     復旧
+                  </Button>
+                  <Button
+                    variant='contained'
+                    sx={{ margin: 2 }}
+                    onClick={() => onDeleteHistoryItem(data.id)}
+                  >
+                    削除
                   </Button>
                 </Typography>
               </Box>
