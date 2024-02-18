@@ -59,6 +59,7 @@ type PositionStore = {
   id: number;
   lat: number;
   lng: number;
+  positionName: string;
 };
 
 function App() {
@@ -91,6 +92,7 @@ function App() {
     useState<google.maps.LatLngLiteral>();
   const [lat, setLat] = useState<string>("");
   const [lng, setLng] = useState<string>("");
+  const [positionName, setPositionName] = useState<string>("");
 
   const url = import.meta.env.VITE_APP_API_URL
     ? import.meta.env.VITE_APP_API_URL
@@ -133,7 +135,12 @@ function App() {
       setPosition({ lat: latValue, lng: lngValue });
       setPositionStore([
         ...positionStore,
-        { id: Date.now(), lat: latValue, lng: lngValue },
+        {
+          id: Date.now(),
+          lat: latValue,
+          lng: lngValue,
+          positionName: positionName,
+        },
       ]);
     } else {
       // 無効な入力の場合のエラー処理（アラートなど）
@@ -162,6 +169,10 @@ function App() {
 
   const handleChangeLng = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLng(e.target.value);
+  };
+
+  const handleChangePositionName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPositionName(e.target.value);
   };
 
   const onCallHistoryItem = (lat: number, lng: number) => {
@@ -209,6 +220,11 @@ function App() {
               <TextField onChange={handleChangeLat} value={lat} />
               <Typography>Longitude: </Typography>
               <TextField onChange={handleChangeLng} value={lng} />
+              <Typography>Name: </Typography>
+              <TextField
+                onChange={handleChangePositionName}
+                value={positionName}
+              />
               <Button variant='contained' onClick={setPositionValues}>
                 SET
               </Button>
@@ -216,7 +232,8 @@ function App() {
             {positionStore.map((data, id) => (
               <Box key={id}>
                 <Typography>
-                  ID:{data.id} Lat:{data.lat} Lng:{data.lng}
+                  ID:{data.id} Lat:{data.lat} Lng:{data.lng} Name:
+                  {data.positionName}
                   <Button
                     variant='contained'
                     sx={{ margin: 2 }}
