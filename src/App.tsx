@@ -127,8 +127,8 @@ function App() {
   }, [loggedIn]);
 
   const setPositionValues = () => {
-    const latValue = parseFloat(lat);
-    const lngValue = parseFloat(lng);
+    const latValue = position.lat;
+    const lngValue = position.lng;
 
     // 緯度と経度が有効な数値であることを確認
     if (!isNaN(latValue) && !isNaN(lngValue)) {
@@ -142,6 +142,7 @@ function App() {
           positionName: positionName,
         },
       ]);
+      setPositionName("");
     } else {
       // 無効な入力の場合のエラー処理（アラートなど）
       alert("Invalid latitude or longitude");
@@ -217,9 +218,9 @@ function App() {
               }}
             >
               <Typography>Latitude: </Typography>
-              <TextField onChange={handleChangeLat} value={lat} />
+              <TextField onChange={handleChangeLat} value={position.lat} />
               <Typography>Longitude: </Typography>
-              <TextField onChange={handleChangeLng} value={lng} />
+              <TextField onChange={handleChangeLng} value={position.lng} />
               <Typography>Name: </Typography>
               <TextField
                 onChange={handleChangePositionName}
