@@ -233,8 +233,7 @@ function App() {
             {positionStore.map((data, id) => (
               <Box key={id}>
                 <Typography>
-                  ID:{data.id} Lat:{data.lat} Lng:{data.lng} Name:
-                  {data.positionName}
+                  Name:{data.positionName} (Lat:{data.lat} Lng:{data.lng} )
                   <Button
                     variant='contained'
                     sx={{ margin: 2 }}
