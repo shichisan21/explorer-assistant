@@ -28,6 +28,13 @@ import {
   Box,
   TextField,
   Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -230,27 +237,45 @@ function App() {
                 SET
               </Button>
             </Box>
-            {positionStore.map((data, id) => (
-              <Box key={id}>
-                <Typography>
-                  Name:{data.positionName} (Lat:{data.lat} Lng:{data.lng} )
-                  <Button
-                    variant='contained'
-                    sx={{ margin: 2 }}
-                    onClick={() => onCallHistoryItem(data.lat, data.lng)}
-                  >
-                    復旧
-                  </Button>
-                  <Button
-                    variant='contained'
-                    sx={{ margin: 2 }}
-                    onClick={() => onDeleteHistoryItem(data.id)}
-                  >
-                    削除
-                  </Button>
-                </Typography>
-              </Box>
-            ))}
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell align='right'>Latitude</TableCell>
+                    <TableCell align='right'>Longitude</TableCell>
+                    <TableCell align='right'>Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {positionStore.map((data) => (
+                    <TableRow key={data.id}>
+                      <TableCell component='th' scope='row'>
+                        {data.positionName}
+                      </TableCell>
+                      <TableCell align='right'>{data.lat}</TableCell>
+                      <TableCell align='right'>{data.lng}</TableCell>
+                      <TableCell align='right'>
+                        <Button
+                          variant='contained'
+                          sx={{ margin: 1 }}
+                          onClick={() => onCallHistoryItem(data.lat, data.lng)}
+                        >
+                          復旧
+                        </Button>
+                        <Button
+                          variant='contained'
+                          sx={{ margin: 1 }}
+                          onClick={() => onDeleteHistoryItem(data.id)}
+                        >
+                          削除
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Box>
           <AppBar position='static'>
             <Toolbar>
