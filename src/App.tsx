@@ -241,18 +241,20 @@ function App() {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Name</TableCell>
+                    <TableCell>No</TableCell>
+                    <TableCell align='right'>Name</TableCell>
                     <TableCell align='right'>Latitude</TableCell>
                     <TableCell align='right'>Longitude</TableCell>
                     <TableCell align='right'>Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {positionStore.map((data) => (
+                  {positionStore.map((data, id) => (
                     <TableRow key={data.id}>
                       <TableCell component='th' scope='row'>
-                        {data.positionName}
+                        {id + 1}
                       </TableCell>
+                      <TableCell align='right'>{data.positionName}</TableCell>
                       <TableCell align='right'>{data.lat}</TableCell>
                       <TableCell align='right'>{data.lng}</TableCell>
                       <TableCell align='right'>
