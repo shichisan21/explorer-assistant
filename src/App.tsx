@@ -58,6 +58,7 @@ import BackdropComponent from "./component/BackdropComponent";
 import SortComponent from "./component/SortComponent";
 import FilterComponent from "./component/FilterComponent";
 import LambdaCheck from "./component/LambdaCheck";
+import MapView from "./pages/MapView";
 import { Status, Wrapper } from "@googlemaps/react-wrapper";
 import { MapViewerComponent } from "./component/MapViewerComponent";
 import { Marker } from "./component/MapViewerComponent/Marker";
@@ -352,6 +353,9 @@ function App() {
             <ListItem component={Link} to='/LambdaCheck'>
               <ListItemText primary='LambdaCheck' />
             </ListItem>
+            <ListItem component={Link} to='/MapView'>
+              <ListItemText primary='MapView' />
+            </ListItem>
           </Drawer>
           <div>
             最終ログイン時刻:
@@ -388,6 +392,7 @@ function App() {
                 <Route path='/mobile/List' element={<SampleList />} />
                 <Route path='/mobile/Chatroom' element={<ChatRoom />} />
                 <Route path='/LambdaCheck' element={<LambdaCheck />} />
+                <Route path='/MapView' element={<MapView />} />
               </>
             ) : (
               <Route path='*' element={<Navigate to='/auth' />} />
