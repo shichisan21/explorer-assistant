@@ -7,23 +7,9 @@
  */
 
 import React, { useEffect, useRef, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  Navigate,
-} from "react-router-dom";
 
 import {
-  AppBar,
-  Toolbar,
-  IconButton,
   Typography,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
   Box,
   TextField,
   Button,
@@ -35,7 +21,6 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 
 import { Status, Wrapper } from "@googlemaps/react-wrapper";
 import { MapViewerComponent } from "../component/MapViewerComponent";
