@@ -117,14 +117,6 @@ const MapView: React.FC = () => {
       }
     };
   }, []);
-
-  const handleSendMessage = () => {
-    console.log("WebSocket readyState:", wsRef.current?.readyState);
-    if (wsRef.current) {
-      wsRef.current.send(message);
-      setMessage("");
-    }
-  };
   const handleMapClick = (lat: any, lng: any) => {
     console.log("クリック位置", lat, lng);
     setMarkerPosition({ lat: lat, lng: lng });
