@@ -34,12 +34,8 @@ type PositionStore = {
 };
 
 const MapView: React.FC = () => {
-  const [message, setMessage] = useState<string>("");
-  const [messages, setMessages] = useState<string[]>([]);
-  const wsRef = useRef<WebSocket | null>(null);
   // ログイン有効時間
   const EXPIRY_TIME = 1000 * 60 * 60; // 1時間（ミリ秒単位）
-  const [loading, setLoading] = useState(true);
 
   const checkIsLoggedIn = () => {
     const loggedInTime = localStorage.getItem("loggedInTime");
@@ -54,9 +50,6 @@ const MapView: React.FC = () => {
   };
 
   // ステートの初期値をlocalStorageから取得する
-  const [loggedIn, setLoggedIn] = useState(checkIsLoggedIn());
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [lastLoginTime, setLastLoginTime] = useState<string | null>(null);
   const [position, setPosition] = useState<google.maps.LatLngLiteral>({
     lat: 34.2422,
     lng: 132.555,
