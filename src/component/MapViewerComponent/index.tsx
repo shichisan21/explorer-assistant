@@ -23,6 +23,7 @@ export const MapViewerComponent: React.FC<MapProps> = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<google.maps.Map>();
+  console.log("OPTIONS", children, options);
 
   useEffect(() => {
     console.log("OPTIONS", children, options);
@@ -40,7 +41,11 @@ export const MapViewerComponent: React.FC<MapProps> = ({
       if (onMapClick) {
         window.google.maps.event.clearListeners(initMap, "click"); // 既存のリスナーをクリア
         initMap.addListener("click", (e) => {
-          map?.panTo({ lat: e.latLng.lat(), lng: e.latLng.lng() });
+          const lat = e.latLng.lat();
+          const lng = e.latLng.lng();
+          onMapClick(lat, lng);
+          map?.panTo({ lat, lng });
+          console.log(`Map clicked at lat: ${lat}, lng: ${lng}`);
         });
       }
 
