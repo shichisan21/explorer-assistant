@@ -90,7 +90,7 @@ const MapView: React.FC = () => {
 
   const handleMapClick = (lat: any, lng: any) => {
     console.log("クリック位置", lat, lng);
-    setMarkerPosition({ lat: lat, lng: lng });
+    // setMarkerPosition({ lat: lat, lng: lng });
   };
 
   const handleChangeLat = (e: React.ChangeEvent<HTMLInputElement>) => {
