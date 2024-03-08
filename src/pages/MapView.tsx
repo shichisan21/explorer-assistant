@@ -55,8 +55,6 @@ const MapView: React.FC = () => {
     lng: 132.555,
   });
   const [positionStore, setPositionStore] = useState<PositionStore[]>([]);
-  const [markerPosition, setMarkerPosition] =
-    useState<google.maps.LatLngLiteral>();
   const [lat, setLat] = useState<string>("");
   const [lng, setLng] = useState<string>("");
   const [positionName, setPositionName] = useState<string>("");
