@@ -34,22 +34,6 @@ type PositionStore = {
 };
 
 const MapView: React.FC = () => {
-  // ログイン有効時間
-  const EXPIRY_TIME = 1000 * 60 * 60; // 1時間（ミリ秒単位）
-
-  const checkIsLoggedIn = () => {
-    const loggedInTime = localStorage.getItem("loggedInTime");
-    const currentTime = new Date().getTime();
-    const isLoggedIn = localStorage.getItem("loggedIn");
-
-    // loggedInTimeがnullでないかどうかと、数値に変換できるかどうかをチェック
-    if (loggedInTime && !isNaN(Number(loggedInTime)) && isLoggedIn === "true") {
-      return currentTime - Number(loggedInTime) < EXPIRY_TIME;
-    }
-    return false;
-  };
-
-  // ステートの初期値をlocalStorageから取得する
   const [position, setPosition] = useState<google.maps.LatLngLiteral>({
     lat: 34.2422,
     lng: 132.555,
