@@ -14,9 +14,7 @@ export const Marker: React.FC<MarkerProps> = ({ setPosition, ...options }) => {
 
     if (marker) {
       google.maps.event.addListener(marker, "dragend", function (e) {
-        console.log("e", e.latLng.lat());
-        console.log("e", e.latLng.lng());
-        const newPosition = { lat: e.latLng.lat(), lng: e.latLng.lng() };
+        console.log("e", e.latLng.lat(), e.latLng.lng());
         setPosition(e.latLng.lat(), e.latLng.lng());
       });
     }
