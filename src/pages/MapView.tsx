@@ -127,7 +127,11 @@ const MapView: React.FC = () => {
           <TextField onChange={handleChangeLng} value={position.lng} />
           <Typography>Name: </Typography>
           <TextField onChange={handleChangePositionName} value={positionName} />
-          <Button variant='contained' onClick={setPositionValues}>
+          <Button
+            variant='contained'
+            disabled={!positionName}
+            onClick={setPositionValues}
+          >
             SET
           </Button>
         </Box>
