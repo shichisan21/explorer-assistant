@@ -62,6 +62,8 @@ import MapView from "./pages/MapView";
 import { Status, Wrapper } from "@googlemaps/react-wrapper";
 import { MapViewerComponent } from "./component/MapViewerComponent";
 import { Marker } from "./component/MapViewerComponent/Marker";
+import AppRoutes from "./routes/AppRoutes";
+import getRoutes from "./routes/AppRoutes";
 
 type PositionStore = {
   id: number;
@@ -311,7 +313,9 @@ function App() {
                 <Route path='/mobile/List' element={<SampleList />} />
                 <Route path='/mobile/Chatroom' element={<ChatRoom />} />
                 <Route path='/LambdaCheck' element={<LambdaCheck />} />
-                <Route path='/MapView' element={<MapView />} />
+                {getRoutes()}
+
+                {/* <Route path='/MapView' element={<MapView />} /> */}
               </>
             ) : (
               <Route path='*' element={<Navigate to='/auth' />} />
