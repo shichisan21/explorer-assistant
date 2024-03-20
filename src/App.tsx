@@ -37,7 +37,6 @@ import {
   Paper,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import AWSAuthenticate from "./auth/AWSAuthenticate";
 
 import { Status, Wrapper } from "@googlemaps/react-wrapper";
 import getRoutes from "./routes/AppRoutes";
@@ -257,17 +256,7 @@ function App() {
               ? new Date(Number(lastLoginTime)).toLocaleString()
               : "未ログインまたは情報がありません"}
           </div>
-          <Routes>
-            <Route
-              path='/auth'
-              element={<AWSAuthenticate setLoggedIn={setLoggedIn} />}
-            />
-            {loggedIn ? (
-              <>{getRoutes()}</>
-            ) : (
-              <Route path='*' element={<Navigate to='/auth' />} />
-            )}
-          </Routes>
+          {getRoutes(loggedIn, setLoggedIn)}
         </>
       )}
     </Router>
