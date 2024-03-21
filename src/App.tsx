@@ -108,63 +108,8 @@ function App() {
     }
   }, [loggedIn]);
 
-  const setPositionValues = () => {
-    const latValue = position.lat;
-    const lngValue = position.lng;
-
-    // 緯度と経度が有効な数値であることを確認
-    if (!isNaN(latValue) && !isNaN(lngValue)) {
-      setPosition({ lat: latValue, lng: lngValue });
-      setPositionStore([
-        ...positionStore,
-        {
-          id: Date.now(),
-          lat: latValue,
-          lng: lngValue,
-          positionName: positionName,
-        },
-      ]);
-      setPositionName("");
-    } else {
-      // 無効な入力の場合のエラー処理（アラートなど）
-      alert("Invalid latitude or longitude");
-    }
-  };
-
-  const logOut = () => {
-    setLoggedIn(false);
-    localStorage.removeItem("loggedIn");
-    localStorage.removeItem("loggedInTime");
-  };
-
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
-  };
-
-  const handleMapClick = (lat: any, lng: any) => {
-    console.log("クリック位置", lat, lng);
-    setMarkerPosition({ lat: lat, lng: lng });
-  };
-
-  const handleChangeLat = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLat(e.target.value);
-  };
-
-  const handleChangeLng = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLng(e.target.value);
-  };
-
-  const handleChangePositionName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPositionName(e.target.value);
-  };
-
-  const onCallHistoryItem = (lat: number, lng: number) => {
-    setPosition({ lat: lat, lng: lng });
-  };
-
-  const onDeleteHistoryItem = (id: number) => {
-    const filterdItem = positionStore.filter((item) => item.id != id);
-    setPositionStore(filterdItem);
   };
 
   return (
