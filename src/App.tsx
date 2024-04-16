@@ -194,6 +194,9 @@ function App() {
             <ListItem component={Link} to='/MapView'>
               <ListItemText primary='MapView' />
             </ListItem>
+            <ListItem component={Link} to='/SupabaseTest'>
+              <ListItemText primary='SupabaseTest' />
+            </ListItem>
           </Drawer>
           <div>
             最終ログイン時刻:

@@ -25,6 +25,7 @@ import LambdaCheck from "../component/LambdaCheck";
 import { MapViewerComponent } from "../component/MapViewerComponent";
 import { Marker } from "../component/MapViewerComponent/Marker";
 import AWSAuthenticate from "../auth/AWSAuthenticate";
+import SupabaseTest from "../component/supabaseTest";
 
 // 他の必要なコンポーネントのimportもここに追加します
 
@@ -63,6 +64,7 @@ const getRoutes = (
           <Route path='/mobile/Chatroom' element={<ChatRoom />} />
           <Route path='/LambdaCheck' element={<LambdaCheck />} />
           <Route path='/MapView' element={<MapView />} />
+          <Route path='/SupabaseTest' element={<SupabaseTest />} />
         </>
       ) : (
         <Route path='*' element={<Navigate to='/auth' />} />
